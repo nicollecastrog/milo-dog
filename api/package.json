@@ -1,0 +1,21 @@
+{
+  "name": "milo-api",
+  "version": "0.0.1",
+  "description": "GraphQL API for fetching Milo data (namely, Instagram pics)",
+  "main": "index.js",
+  "author": "Nico Castro",
+  "license": "MIT",
+  "scripts": {
+    "watch": "webpack --watch --mode development"
+  },
+  "dependencies": {
+    "graphql-yoga": "^1.17.4"
+  },
+  "devDependencies": {
+    "nodemon-webpack-plugin": "^4.0.8",
+    "ts-loader": "6.0.0",
+    "typescript": "^3.4.5",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.2"
+  }
+}
