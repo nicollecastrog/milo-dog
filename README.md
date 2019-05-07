@@ -1,8 +1,8 @@
 # Milo the Ginger Bear
-An over-engineered website about my dog, Milo.
+A massively over-engineered website about a small sausage dog, Milo.
 
-# Practical
+## Practical
 All info you could possibly need about dog-sitting Milo, in one place.
 
-# Practicing
+## Practicing
 I use Milo's website to practice using certain tech tools, languages, etc.
