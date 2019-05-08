@@ -9,13 +9,17 @@ I use Milo's website to practice using certain tech tools, languages, etc.
 
 __Development & Running__
 
-milo.dog is set up for local development using Docker (via a mounted volume).
+_milo.dog_ is set up for local development using Docker (via a mounted volume). Ensure you have Docker and yarn installed on your machine before proceeding.
 
 From project root: `yarn start`
 
 Then visit [http://localhost:4000/](http://localhost:4000/)
 
 As you make changes to the code, they'll be reflected.
+
+__Running in production mode__
+
+`yarn serve`
 
 __Testing__
 

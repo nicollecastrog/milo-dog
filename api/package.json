@@ -6,8 +6,10 @@
   "author": "Nico Castro",
   "license": "MIT",
   "scripts": {
+    "build": "webpack --mode production",
     "lint": "tslint --project ./ --config tslint.json",
     "precommit": "yarn typecheck && yarn lint-staged",
+    "serve": "node build/index.js",
     "test": "jest",
     "typecheck": "tsc",
     "watch": "webpack --watch --mode development"
