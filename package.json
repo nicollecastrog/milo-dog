@@ -1,0 +1,11 @@
+{
+  "name": "milo-dog",
+  "version": "0.0.1",
+  "description": "A massively over-engineered website about a small sausage dog, Milo.",
+  "author": "Nico Castro",
+  "license": "MIT",
+  "scripts": {
+    "start": "docker-compose -f 'dev.docker-compose.yml' up",
+    "test": "cd api && yarn test"
+  }
+}

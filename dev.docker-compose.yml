@@ -1,0 +1,13 @@
+version: "3"
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: dev.dockerfile
+    image: milo-dev
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - "./api:/app"

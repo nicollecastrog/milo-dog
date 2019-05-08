@@ -7,10 +7,9 @@ RUN apk upgrade --update \
 
 FROM build-env AS dependencies
 WORKDIR /app
-# copy current directory to path relative to container's WORKDIR
+# copy two files below to path relative to container's WORKDIR
 # in this case, WORKDIR itself
-COPY ./ ./
-ENV NODE_ENV=development
+COPY package.json yarn.lock ./
 RUN yarn install
 
 EXPOSE 4000
