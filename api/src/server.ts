@@ -1,4 +1,4 @@
-import { GraphQLServer } from "graphql-yoga";
+import { GraphQLServer, Options } from "graphql-yoga";
 
 const typeDefs = `
   type Query {
@@ -14,4 +14,10 @@ const resolvers = {
 };
 
 const server = new GraphQLServer({ typeDefs, resolvers });
-server.start(() => console.log("Server is running on localhost:4000"));
+
+const startServer = async (callback?: (options: Options) => void) => {
+  const startedServer = await server.start(callback);
+  return startedServer;
+};
+
+export default startServer;
