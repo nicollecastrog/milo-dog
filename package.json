@@ -5,9 +5,13 @@
   "author": "Nico Castro",
   "license": "MIT",
   "scripts": {
+    "run:development:api": "docker-compose -f 'dev.docker-compose.yml' run api",
+    "run:production:api": "docker-compose -f 'prod.docker-compose.yml' run api",
     "serve": "yarn start:production",
-    "start": "docker-compose -f 'dev.docker-compose.yml' up",
+    "start": "yarn start:development",
+    "start:development": "docker-compose -f 'dev.docker-compose.yml' up",
     "start:production": "docker-compose -f 'prod.docker-compose.yml' up",
-    "test": "cd api && yarn test"
+    "test": "yarn test:api",
+    "test:api": "cd api && yarn test"
   }
 }

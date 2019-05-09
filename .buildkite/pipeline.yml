@@ -1,3 +1,7 @@
 steps:
-  - label: Example Test
-    command: echo "Hello!"
+  - label: ":hammer: Test API"
+    command: "yarn run:production:api yarn test"
+    branches: "master"
+  - label: ":hammer: Test API"
+    command: "yarn run:development:api yarn test"
+    branches: "!master"
