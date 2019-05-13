@@ -1,7 +1,19 @@
 .DS_Store
+
+# Jest
 .jest/
-build/
 coverage/
 dist/
+
+# Run & Build
+build/
 node_modules/
 yarn-error.log
+
+# Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/
+
+# Sensitive Files
+variables.tf

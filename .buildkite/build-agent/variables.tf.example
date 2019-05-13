@@ -1,0 +1,19 @@
+# AWS
+
+variable "aws_access_key" {
+  default = "YOUR_ADMIN_ACCESS_KEY"
+}
+
+variable "aws_secret_key" {
+  default = "YOUR_ADMIN_SECRET_KEY"
+}
+
+variable "aws_region" {
+  default = "eu-west-2"
+}
+
+# Buildkite
+
+variable "buildkite_token" {
+  default = "YOUR_BUILDKITE_AGENT_TOKEN"
+}
