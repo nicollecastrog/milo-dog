@@ -9,7 +9,7 @@ FROM build-env AS dependencies
 WORKDIR /app
 # copy two files below to path relative to container's WORKDIR
 # in this case, WORKDIR itself
-COPY package.json yarn.lock ./
+COPY ./package.json ./yarn.lock ./
 RUN yarn install
 
 EXPOSE 4000

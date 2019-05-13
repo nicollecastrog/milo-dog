@@ -10,9 +10,14 @@ WORKDIR /app
 COPY ./ ./
 RUN yarn install
 
-FROM dependencies AS production
+FROM dependencies AS build
 WORKDIR /app
 RUN yarn build
+
+FROM build-env AS production
+COPY --from=dependencies /app/node_modules ./node_modules
+COPY --from=build /app/package.json ./
+COPY --from=build /app/build ./build
 
 EXPOSE 4000
 CMD yarn serve
