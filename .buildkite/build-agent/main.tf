@@ -10,6 +10,7 @@ resource "aws_instance" "buildkite-agent" {
 
   provisioner "remote-exec" {
     inline = [
+      "apk add --no-cache git yarn",
       "TOKEN=${var.buildkite_token} bash -c \"`curl -sL https://raw.githubusercontent.com/buildkite/agent/master/install.sh`\"",
       "nohup ~/.buildkite-agent/bin/buildkite-agent start &",
       "sleep 1"
