@@ -9,6 +9,7 @@ FROM build-env AS dependencies
 WORKDIR /app
 COPY ./ ./
 RUN yarn install
+RUN yarn test
 
 FROM dependencies AS build
 WORKDIR /app
