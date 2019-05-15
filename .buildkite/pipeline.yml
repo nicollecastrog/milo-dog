@@ -1,7 +1,7 @@
 steps:
   - label: ":hammer: Test API"
-    command: "yarn run:production:api true"
+    command: "yarn run-test:production:api"
     branches: "master"
   - label: ":hammer: Test API"
-    command: "yarn run:development:api yarn test"
+    command: "yarn run-test:development:api"
     branches: "!master"

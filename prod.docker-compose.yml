@@ -1,5 +1,15 @@
-version: "3"
+version: "3.7"
 services:
+  test:
+    build:
+      context: ./api
+      dockerfile: prod.dockerfile
+      target: dependencies
+    image: milo-prod
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
   api:
     build:
       context: ./api
