@@ -1,26 +1,27 @@
 resource "aws_instance" "buildkite-agent" {
-  ami             = "${data.aws_ami.linux.id}"
-  instance_type   = "t2.micro"
-  key_name        = "${aws_key_pair.buildkite-agent-key.key_name}"
+  ami           = "${data.aws_ami.linux.id}"
+  instance_type = "t2.micro"
+  key_name      = "${aws_key_pair.buildkite-agent-key.key_name}"
 
   security_groups = [
     "${aws_security_group.allow_inbound_ssh.name}",
-    "${aws_security_group.allow_outbound_all.name}"
+    "${aws_security_group.allow_outbound_all.name}",
   ]
 
   provisioner "remote-exec" {
     inline = [
-      "curl -o- -L https://yarnpkg.com/install.sh | bash",
-      "sudo yum -y install git",
+      "curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo",
+      "curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -",
+      "sudo yum -y install yarn git",
       "TOKEN=${var.buildkite_token} bash -c \"`curl -sL https://raw.githubusercontent.com/buildkite/agent/master/install.sh`\"",
       "nohup ~/.buildkite-agent/bin/buildkite-agent start &",
-      "sleep 1"
+      "sleep 1",
     ]
 
     connection {
-      type          = "ssh"
-      user          = "ec2-user"
-      private_key   = "${file("~/.ssh/milo_dog")}"
+      type        = "ssh"
+      user        = "ec2-user"
+      private_key = "${file("~/.ssh/milo_dog")}"
     }
   }
 
@@ -30,7 +31,7 @@ resource "aws_instance" "buildkite-agent" {
 }
 
 resource "aws_eip" "buildkite-agent-eip" {
-  instance    = "${aws_instance.buildkite-agent.id}"
+  instance = "${aws_instance.buildkite-agent.id}"
 }
 
 resource "aws_security_group" "allow_inbound_ssh" {
@@ -50,9 +51,9 @@ resource "aws_security_group" "allow_outbound_all" {
   description = "Allow all outbound traffic"
 
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
