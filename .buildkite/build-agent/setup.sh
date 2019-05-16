@@ -21,6 +21,9 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 32A37959C
 # install:
 sudo apt-get -y update && sudo apt-get -y install yarn docker-ce docker-ce-cli containerd.io docker-compose buildkite-agent
 
+# add ubuntu and buildkite users to docker group:
+sudo usermod -aG docker buildkite-agent
+
 # start buildkite agent:
 sudo sed -i "s/xxx/${1}/g" /etc/buildkite-agent/buildkite-agent.cfg
 sudo systemctl enable buildkite-agent && sudo systemctl start buildkite-agent
