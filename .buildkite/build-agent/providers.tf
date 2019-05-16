@@ -6,18 +6,16 @@ provider "aws" {
   version = "~> 1.7"
 }
 
-data "aws_ami" "linux" {
+data "aws_ami" "ubuntu" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-hvm-2.0.20190313-x86_64-gp2"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-20190212.1"]
   }
 
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-
-  owners = ["amazon"]
 }
