@@ -3,11 +3,12 @@ provider "aws" {
   secret_key = "${var.aws_secret_key}"
   region     = "${var.aws_region}"
 
-  version = "~> 1.7"
+  version = "~> 2.7"
 }
 
 data "aws_ami" "ubuntu" {
   most_recent = true
+  owners      = ["099720109477"]
 
   filter {
     name   = "name"

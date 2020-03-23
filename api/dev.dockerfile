@@ -10,7 +10,7 @@ WORKDIR /app
 # copy two files below to path relative to container's WORKDIR
 # in this case, WORKDIR itself
 COPY ./package.json ./yarn.lock ./
-RUN yarn install
+RUN yarn
 
 EXPOSE 4000
 CMD yarn watch

@@ -1,3 +1,7 @@
+terraform {
+  required_version = "0.12.3"
+}
+
 resource "aws_instance" "buildkite-agent" {
   ami           = "${data.aws_ami.ubuntu.id}"
   instance_type = "t2.micro"
@@ -14,25 +18,27 @@ resource "aws_instance" "buildkite-agent" {
 
     connection {
       type        = "ssh"
+      host        = self.public_ip
       user        = "ubuntu"
-      private_key = "${file("~/.ssh/milo_dog")}"
+      private_key = "${file("~/.ssh/milo_dog")}" # OPENSSH key: corresponds to agent_key.pub
     }
   }
 
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/setup.sh",
-      "/tmp/setup.sh ${var.buildkite_token}",
+      "DEBIAN_FRONTEND=noninteractive /tmp/setup.sh ${var.buildkite_token}",
     ]
 
     connection {
       type        = "ssh"
+      host        = self.public_ip
       user        = "ubuntu"
       private_key = "${file("~/.ssh/milo_dog")}"
     }
   }
 
-  tags {
+  tags = {
     Name = "buildkite-agent"
   }
 }

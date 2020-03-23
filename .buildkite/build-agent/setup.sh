@@ -3,6 +3,7 @@
 sudo apt-get -y update
 
 # get docker requirements:
+echo '* libraries/restart-without-asking boolean true' | sudo debconf-set-selections
 sudo apt-get -y install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
 
 # get yarn repo:
