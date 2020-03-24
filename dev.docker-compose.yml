@@ -1,15 +1,26 @@
-version: "3"
+version: "3.4"
+x-development:
+  &development-defaults
+  image: milo-dev
+  ports:
+    - "4000:4000"
+  environment:
+    - NODE_ENV=development
 services:
   api:
     build:
       context: ./api
       dockerfile: dev.dockerfile
-    image: milo-dev
-    ports:
-      - "4000:4000"
-    environment:
-      - NODE_ENV=development
     # volume allows us to mount in app code directly into a running container
     # if we update source code, then the changes will take effect immediately
     volumes:
       - "./api:/app"
+    <<: *development-defaults
+  apiTest:
+    build:
+      context: ./api
+      dockerfile: dev.dockerfile
+      target: dependencies
+    <<: *development-defaults
+    # note no volume is used for apiTest service, as this is the docker image
+    # used in CI, so the full source code must be COPY'd into the image

@@ -7,12 +7,12 @@
   "scripts": {
     "lint:api:js": "cd api && yarn lint:js:fix",
     "lint:api:ts": "cd api && yarn lint:ts:fix",
-    "run-test:development:api": "docker-compose -f 'dev.docker-compose.yml' build api && docker-compose -f 'dev.docker-compose.yml' run api yarn test",
-    "run-test:production:api": "docker-compose -f 'prod.docker-compose.yml' build test && docker-compose -f 'prod.docker-compose.yml' run test yarn test",
+    "run-test:development:api": "docker-compose -f 'dev.docker-compose.yml' build apiTest && docker-compose -f 'dev.docker-compose.yml' run apiTest yarn test",
+    "run-test:production:api": "docker-compose -f 'prod.docker-compose.yml' build apiTest && docker-compose -f 'prod.docker-compose.yml' run apiTest yarn test",
     "serve": "yarn start:production",
     "start": "yarn start:development",
-    "start:development": "docker-compose -f 'dev.docker-compose.yml' up",
-    "start:production": "docker-compose -f 'prod.docker-compose.yml' up",
+    "start:development": "docker-compose -f 'dev.docker-compose.yml' config --services | grep -v 'Test' | xargs docker-compose -f 'dev.docker-compose.yml' up",
+    "start:production": "docker-compose -f 'prod.docker-compose.yml' config --services | grep -v 'Test' | xargs docker-compose -f 'prod.docker-compose.yml' up",
     "test": "yarn test:api",
     "test:api": "cd api && yarn test"
   },
