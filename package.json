@@ -5,6 +5,8 @@
   "author": "Nico Castro",
   "license": "MIT",
   "scripts": {
+    "lint:api:js": "cd api && yarn lint:js:fix",
+    "lint:api:ts": "cd api && yarn lint:ts:fix",
     "run-test:development:api": "docker-compose -f 'dev.docker-compose.yml' build api && docker-compose -f 'dev.docker-compose.yml' run api yarn test",
     "run-test:production:api": "docker-compose -f 'prod.docker-compose.yml' build test && docker-compose -f 'prod.docker-compose.yml' run test yarn test",
     "serve": "yarn start:production",
@@ -13,5 +15,24 @@
     "start:production": "docker-compose -f 'prod.docker-compose.yml' up",
     "test": "yarn test:api",
     "test:api": "cd api && yarn test"
+  },
+  "lint-staged": {
+    "./api/**/*.{js,jsx,json,md}": [
+      "yarn lint:api:js", 
+      "git add"
+    ],
+    "./api/**/*.{ts,tsx}": [
+      "yarn lint:api:ts", 
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "devDependencies": {
+    "husky": "^2.2.0",
+    "lint-staged": "^8.1.6"
   }
 }

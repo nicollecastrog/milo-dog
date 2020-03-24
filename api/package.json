@@ -8,30 +8,19 @@
   "scripts": {
     "build": "webpack --mode production",
     "lint": "tslint --project ./ --config tslint.json",
-    "precommit": "yarn typecheck && yarn lint-staged",
+    "lint:js:fix": "prettier --write 'src/**/*.js' 'src/**/*.jsx' '*.js' '*.json' '*.md'",
+    "lint:ts:fix": "yarn typecheck && yarn lint --fix",
     "serve": "node build/index.js",
     "test": "jest",
     "typecheck": "tsc",
     "watch": "webpack --watch --mode development"
-  },
-  "lint-staged": {
-    "*.{js,jsx,json,md}": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.{ts,tsx}": [
-      "yarn lint --fix",
-      "git add"
-    ]
   },
   "dependencies": {
     "graphql-yoga": "^1.17.4"
   },
   "devDependencies": {
     "@types/jest": "^24.0.12",
-    "husky": "^2.2.0",
     "jest": "^24.8.0",
-    "lint-staged": "^8.1.6",
     "nodemon-webpack-plugin": "^4.0.8",
     "prettier": "^1.17.0",
     "ts-jest": "^24.0.2",
