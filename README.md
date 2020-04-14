@@ -1,26 +1,31 @@
-# Milo the Ginger Bear
-A massively over-engineered website about a small sausage dog, Milo.
+# milo.dog
+A massively over-engineered webapp about a small sausage dog, Milo.
 
-## Practical
-All info you could possibly need about dog-sitting Milo, in one place.
+[![Build status](https://badge.buildkite.com/9bd2a6e64f072b66cd0f0997fb75af8033fb781df412812800.svg?branch=master)](https://buildkite.com/milo-dot-dog/milo-dot-dog)
 
-## Practicing
-I use Milo's website to practice using certain tech tools, languages, etc.
 
-__Development & Running__
+### Development & Running
 
-_milo.dog_ is set up for local development using Docker (via a mounted volume). Ensure you have Docker and yarn installed on your machine before proceeding.
+_milo.dog_ is set up for local development using Docker (via a mounted volume). As you make changes to the code, they'll be reflected.
 
-From project root: `yarn start`
+Ensure you have Docker and `yarn` installed on your machine before proceeding.
 
-Then visit [http://localhost:4000/](http://localhost:4000/)
+From project root: `yarn start`.
 
-As you make changes to the code, they'll be reflected.
+This starts all services (except those configured for dev branches in CI, following the pattern "`xTest`") in development mode.
 
-__Running in production mode__
+**Visit the below to access each service:**
 
-`yarn serve`
+`/api`: [http://localhost:4000](http://localhost:4000/)
 
-__Testing__
+### Testing
+
+From project root, run the below to run all tests for all services:
 
 `yarn test`
+
+### Running in production mode
+
+As with development, the below runs all services except those configured specifically for running tests in CI:
+
+From project root: `yarn serve`
