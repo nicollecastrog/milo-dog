@@ -7,9 +7,11 @@ RUN apk upgrade --update \
 
 FROM build-env AS dependencies
 WORKDIR /app
-# copy two files below to path relative to container's WORKDIR
-# in this case, WORKDIR itself
-COPY ./package.json ./yarn.lock ./
+# copy the source code to WORKDIR
+# however in development, the volume declared in root dev.docker-compose
+# overrides what's copied in here, ensuring that code dynamically updates
+# without needing to rebuild the dev docker image
+COPY ./ ./
 RUN yarn
 
 EXPOSE 4000

@@ -7,14 +7,14 @@ x-production:
   environment:
     - NODE_ENV=production
 services:
-  test:
-    build:
-      context: ./api
-      dockerfile: prod.dockerfile
-      target: dependencies
-    <<: *production-defaults
   api:
     build:
       context: ./api
       dockerfile: prod.dockerfile
+    <<: *production-defaults
+  apiTest:
+    build:
+      context: ./api
+      dockerfile: prod.dockerfile
+      target: dependencies
     <<: *production-defaults
