@@ -1,21 +1,23 @@
 {
   "name": "milo-dog",
   "version": "0.0.1",
-  "description": "A massively over-engineered website about a small sausage dog, Milo.",
+  "description": "A massively over-engineered webapp about a small sausage dog, Milo.",
   "author": "Nico Castro",
   "license": "MIT",
   "scripts": {
     "lint:api:js": "cd api && yarn lint:js:fix",
     "lint:api:ts": "cd api && yarn lint:ts:fix",
     "lint:app": "cd app && yarn lint:fix",
-    "run-test:development:api": "docker-compose -f 'dev.docker-compose.yml' build apiTest && docker-compose -f 'dev.docker-compose.yml' run apiTest yarn test",
-    "run-test:production:api": "docker-compose -f 'prod.docker-compose.yml' build apiTest && docker-compose -f 'prod.docker-compose.yml' run apiTest yarn test",
+    "run-test:api:development": "docker-compose -f 'dev.docker-compose.yml' build apiTest && docker-compose -f 'dev.docker-compose.yml' run apiTest yarn test",
+    "run-test:api:production": "docker-compose -f 'prod.docker-compose.yml' build apiTest && docker-compose -f 'prod.docker-compose.yml' run apiTest yarn test",
+    "run-test:app:development": "docker-compose -f 'dev.docker-compose.yml' build appTest && docker-compose -f 'dev.docker-compose.yml' run appTest yarn test",
     "serve": "yarn start:production",
     "start": "yarn start:development",
     "start:development": "docker-compose -f 'dev.docker-compose.yml' config --services | grep -v 'Test' | xargs docker-compose -f 'dev.docker-compose.yml' up",
     "start:production": "docker-compose -f 'prod.docker-compose.yml' config --services | grep -v 'Test' | xargs docker-compose -f 'prod.docker-compose.yml' up",
-    "test": "yarn test:api",
-    "test:api": "cd api && yarn test"
+    "test": "yarn test:api && yarn test:app",
+    "test:api": "cd api && yarn test",
+    "test:app": "cd app && yarn test"
   },
   "lint-staged": {
     "./api/**/*.{js,jsx,json,md}": "yarn lint:api:js",

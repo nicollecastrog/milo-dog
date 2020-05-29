@@ -1,7 +1,7 @@
 version: "3.4"
 x-development:
   &development-defaults
-  image: milo-dev
+  image: milo-api-dev
   ports:
     - "4000:4000"
   environment:
@@ -24,3 +24,10 @@ services:
     <<: *development-defaults
     # note no volume is used for apiTest service, as this is the docker image
     # used in CI, so the full source code must be COPY'd into the image
+  appTest:
+    build:
+      context: ./app
+      dockerfile: dev.dockerfile
+      target: dependencies
+    <<: *development-defaults
+    image: milo-app-dev
