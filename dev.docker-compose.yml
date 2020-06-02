@@ -1,9 +1,15 @@
 version: "3.4"
-x-development:
-  &development-defaults
+x-api-defaults:
+  &api-defaults
   image: milo-api-dev
   ports:
     - "4000:4000"
+  environment:
+    - NODE_ENV=development
+x-app-defaults:
+  &app-defaults
+  ports:
+    - "8081:8081"
   environment:
     - NODE_ENV=development
 services:
@@ -15,19 +21,28 @@ services:
     # if we update source code, then the changes will take effect immediately
     volumes:
       - "./api:/app"
-    <<: *development-defaults
+    <<: *api-defaults
   apiTest:
     build:
       context: ./api
       dockerfile: dev.dockerfile
       target: dependencies
-    <<: *development-defaults
+    <<: *api-defaults
     # note no volume is used for apiTest service, as this is the docker image
     # used in CI, so the full source code must be COPY'd into the image
-  appTest:
+  app:
     build:
       context: ./app
       dockerfile: dev.dockerfile
       target: dependencies
-    <<: *development-defaults
     image: milo-app-dev
+    volumes:
+      - "./app:/app"
+    <<: *app-defaults
+  appTest:
+    build:
+      context: ./app
+      dockerfile: dev.dockerfile
+      target: test-dependencies
+    image: milo-app-test-dev
+    <<: *app-defaults

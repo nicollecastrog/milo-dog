@@ -1,9 +1,9 @@
 steps:
   - label: ":hammer: Test API"
-    command: "yarn run-test:api:production"
+    command: "yarn run-test:api:prod"
     branches: "master"
   - label: ":hammer: Test API"
-    command: "yarn run-test:api:development"
+    command: "yarn run-test:api:dev"
     branches: "!master"
   - label: ":wrench: Test APP"
-    command: "yarn run-test:app:development"
+    command: "yarn run-test:app:dev"
