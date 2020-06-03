@@ -11,6 +11,7 @@
     "lint:js:fix": "prettier --write 'src/**/*.js' 'src/**/*.jsx' '*.js' '*.json' '*.md'",
     "lint:ts:fix": "yarn typecheck && yarn lint --fix",
     "serve": "node build/index.js",
+    "start": "yarn watch",
     "test": "jest",
     "typecheck": "tsc",
     "watch": "webpack --watch --mode development"
