@@ -20,10 +20,20 @@ sudo sh -c 'echo deb https://apt.buildkite.com/buildkite-agent stable main > /et
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 32A37959C2FA5C3C99EFBC32A79206696452D198
 
 # install:
-sudo apt-get -y update && sudo apt-get -y install yarn docker-ce docker-ce-cli containerd.io docker-compose buildkite-agent
+sudo apt-get -y update && sudo apt-get -y install yarn docker-ce docker-ce-cli containerd.io buildkite-agent
+
+# install latest version of docker-compose:
+sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+echo 'Docker Compose Version:'
+docker-compose --version
 
 # add ubuntu and buildkite users to docker group:
 sudo usermod -aG docker buildkite-agent
+
+# enable experimental feature (ie: Buildkit) on Docker daemon:
+echo '{ "experimental": true }' | sudo tee -a /etc/docker/daemon.json
+sudo service docker restart
 
 # start buildkite agent:
 sudo sed -i "s/xxx/${1}/g" /etc/buildkite-agent/buildkite-agent.cfg

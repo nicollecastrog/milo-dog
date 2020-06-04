@@ -1,0 +1,11 @@
+.DS_Store
+
+# Jest
+.jest/
+coverage/
+dist/
+
+# Run & Build
+build/
+node_modules/
+yarn-error.log

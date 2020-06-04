@@ -1,30 +1,33 @@
 {
   "name": "milo-dog",
   "version": "0.0.1",
-  "description": "A massively over-engineered website about a small sausage dog, Milo.",
+  "description": "A massively over-engineered webapp about a small sausage dog, Milo.",
   "author": "Nico Castro",
   "license": "MIT",
   "scripts": {
+    "docker-compose:dev": "docker-compose -f 'dev.docker-compose.yml'",
+    "docker-compose:prod": "docker-compose -f 'prod.docker-compose.yml'",
     "lint:api:js": "cd api && yarn lint:js:fix",
     "lint:api:ts": "cd api && yarn lint:ts:fix",
-    "run-test:development:api": "docker-compose -f 'dev.docker-compose.yml' build apiTest && docker-compose -f 'dev.docker-compose.yml' run apiTest yarn test",
-    "run-test:production:api": "docker-compose -f 'prod.docker-compose.yml' build apiTest && docker-compose -f 'prod.docker-compose.yml' run apiTest yarn test",
-    "serve": "yarn start:production",
-    "start": "yarn start:development",
-    "start:development": "docker-compose -f 'dev.docker-compose.yml' config --services | grep -v 'Test' | xargs docker-compose -f 'dev.docker-compose.yml' up",
-    "start:production": "docker-compose -f 'prod.docker-compose.yml' config --services | grep -v 'Test' | xargs docker-compose -f 'prod.docker-compose.yml' up",
-    "test": "yarn test:api",
-    "test:api": "cd api && yarn test"
+    "lint:app": "cd app && yarn lint:fix",
+    "run-test:api:dev": "COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 yarn docker-compose:dev build apiTest && yarn docker-compose:dev run apiTest yarn test",
+    "run-test:api:prod": "COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 yarn docker-compose:prod build apiTest && yarn docker-compose:prod run apiTest yarn test",
+    "run-test:app:dev": "COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 yarn docker-compose:dev build appTest && yarn docker-compose:dev run appTest yarn test",
+    "run:android": "cd app && yarn android",
+    "run:app": "yarn run:ios && yarn run:android",
+    "run:ios": "cd app && yarn ios",
+    "serve": "yarn start:prod",
+    "start": "yarn start:dev",
+    "start:dev": "yarn docker-compose:dev config --services | grep -Ev 'docker-compose|Test' | COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 xargs yarn docker-compose:dev up -d",
+    "start:prod": "yarn docker-compose:prod config --services | grep -Ev 'docker-compose|Test' | COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 xargs yarn docker-compose:prod up -d",
+    "test": "yarn test:api && yarn test:app",
+    "test:api": "cd api && yarn test",
+    "test:app": "cd app && yarn test"
   },
   "lint-staged": {
-    "./api/**/*.{js,jsx,json,md}": [
-      "yarn lint:api:js", 
-      "git add"
-    ],
-    "./api/**/*.{ts,tsx}": [
-      "yarn lint:api:ts", 
-      "git add"
-    ]
+    "./api/**/*.{js,jsx,json,md}": "yarn lint:api:js",
+    "./api/**/*.{ts,tsx}": "yarn lint:api:ts",
+    "./app/**/*.{js,jsx,ts,tsx}": "yarn lint:app"
   },
   "husky": {
     "hooks": {
@@ -32,7 +35,7 @@
     }
   },
   "devDependencies": {
-    "husky": "^2.2.0",
-    "lint-staged": "^8.1.6"
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.4"
   }
 }

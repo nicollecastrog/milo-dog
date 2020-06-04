@@ -1,14 +1,16 @@
+# syntax=docker/dockerfile:experimental
 ARG node_version="10.9.0"
 FROM node:${node_version}-alpine AS base
 
 FROM base as build-env
-RUN apk upgrade --update \
+RUN --mount=type=cache,target=/var/cache/apk apk upgrade --update \
   && apk add --no-cache yarn
 
 FROM build-env AS dependencies
 WORKDIR /app
 COPY ./ ./
-RUN yarn install
+RUN --mount=type=cache,target=/usr/local/share/.cache/yarn/v1 \
+  yarn install
 
 FROM dependencies AS build
 WORKDIR /app
