@@ -9,7 +9,8 @@ RUN --mount=type=cache,target=/var/cache/apk apk add --no-cache \
 FROM test-build-env AS test-dependencies
 WORKDIR /app
 COPY ./ ./
-RUN yarn
+RUN --mount=type=cache,target=/usr/local/share/.cache/yarn/v1 \
+  yarn
 
 FROM base as watchman-runtime-dependencies
 RUN --mount=type=cache,target=/var/cache/apk apk add --no-cache \
