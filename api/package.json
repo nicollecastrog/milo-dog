@@ -12,7 +12,9 @@
     "lint:ts:fix": "yarn typecheck && yarn lint --fix",
     "serve": "node build/index.js",
     "start": "yarn watch",
+    "start:docker": "cd .. && yarn start:api:dev",
     "test": "jest",
+    "test:docker": "cd .. && yarn run-test:api:dev",
     "typecheck": "tsc",
     "watch": "webpack --watch --mode development"
   },

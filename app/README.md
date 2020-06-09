@@ -12,18 +12,21 @@ Once running, this application can be accessed via the Xcode device simulator an
 
 1. From the root of this monorepo, run:
 
-  `COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 yarn docker-compose:dev up -d app`
+     `yarn start:app:dev`
 
+     Alternatively, from within this directory (`/app`), you can run:
+
+     `yarn start:docker`
 
 *To start the iOS frontend:*
 
 1. From the root of this monorepo, run:
 
-  `yarn run:ios`
+     `yarn run:ios`
 
-  Alternatively, from within this directory (`/app`), you can run:
+     Alternatively, from within this directory (`/app`), you can run:
 
-  `yarn ios`
+     `yarn ios`
 
 *To start the Android frontend:*
 
@@ -31,23 +34,23 @@ Once running, this application can be accessed via the Xcode device simulator an
 
 1. From the root of this monorepo, run:
 
-  `yarn run:android`
+     `yarn run:android`
 
-  Alternatively, from within this directory (`/app`), you can run:
+     Alternatively, from within this directory (`/app`), you can run:
 
-  `yarn android`
+     `yarn android`
 
 **Using local development:**
 
 1. Look at the [root README](../README.md) and ensure you've completed all of the development prerequisites specified there.
 
-1. Additionally, you'll need to install Node and Watchman as per the [React Native docs](https://reactnative.dev/docs/environment-setup)
+1. Additionally, you'll need to install Node and Watchman as per the [React Native docs](https://reactnative.dev/docs/environment-setup).
 
 1. From within this directory (`/app`), run: `yarn` to install the necessary node modules.
 
 1. Then, run `yarn start`
 
-1. Follow the iOS and/or Android frontend instructions above, as needed
+1. Follow the iOS and/or Android frontend instructions above, as needed.
 
 ### Testing
 
@@ -55,10 +58,12 @@ Once running, this application can be accessed via the Xcode device simulator an
 
 From project root: `yarn run-test:app:dev`
 
+Or, from within this directory (`/app`), run: `yarn test:docker`
+
 **To run tests locally:**
 
 From within this directory (`/app`):
 
-1. `yarn`
+1. `yarn` => to ensure you have the latest modules installed
 
 1. `yarn test`
