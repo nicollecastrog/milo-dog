@@ -12,6 +12,14 @@ resource "aws_instance" "buildkite-agent" {
     "${aws_security_group.allow_outbound_all.name}",
   ]
 
+  tags = {
+    Name = "buildkite-agent"
+  }
+
+  root_block_device {
+    volume_size = "20"
+  }
+
   provisioner "file" {
     source      = "setup.sh"
     destination = "/tmp/setup.sh"
@@ -36,10 +44,6 @@ resource "aws_instance" "buildkite-agent" {
       user        = "ubuntu"
       private_key = "${file("~/.ssh/milo_dog")}"
     }
-  }
-
-  tags = {
-    Name = "buildkite-agent"
   }
 }
 
