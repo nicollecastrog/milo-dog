@@ -1,12 +1,13 @@
 import React from "react";
 import {
   Image,
+  Platform,
   SafeAreaView,
-  StyleSheet,
   ScrollView,
-  View,
+  StatusBar,
+  StyleSheet,
   Text,
-  StatusBar
+  View
 } from "react-native";
 
 const App = () => {
@@ -18,20 +19,18 @@ const App = () => {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}
         >
-          <View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>milo.dog</Text>
-              <View>
-                <Text style={styles.sectionDescription}>
-                  A massively over-engineered webapp about a small sausage dog
-                </Text>
-              </View>
-              <View style={styles.sectionImageWrapper}>
-                <Image
-                  style={styles.sectionImage}
-                  source={require("./images/dog/dog.png")}
-                />
-              </View>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionTitle}>milo.dog</Text>
+            <View>
+              <Text style={styles.sectionDescription}>
+                A massively over-engineered webapp about a small sausage dog
+              </Text>
+            </View>
+            <View style={styles.sectionImageWrapper}>
+              <Image
+                style={styles.sectionImage}
+                source={require("./images/dog/dog.png")}
+              />
             </View>
           </View>
         </ScrollView>
@@ -66,12 +65,18 @@ const styles = StyleSheet.create({
   sectionImageWrapper: {
     display: "flex",
     flexDirection: "row",
+    justifyContent: "center",
     paddingVertical: 20
   },
   sectionImage: {
     resizeMode: "contain",
     flex: 1,
-    aspectRatio: 1.82
+    aspectRatio: 1.82,
+    ...Platform.select({
+      web: {
+        height: 200
+      }
+    })
   }
 });
 
