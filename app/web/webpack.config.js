@@ -33,11 +33,14 @@ const babelLoaderConfiguration = {
 
 // This is needed for webpack to import static images in JavaScript files.
 const imageLoaderConfiguration = {
-  test: /\.(gif|jpe?g|png|svg)$/,
+  test: /\.(gif|jpe?g|png)$/,
+  exclude: /node_modules/,
   use: {
-    loader: "url-loader",
+    loader: "react-native-web-image-loader",
     options: {
-      name: "[name].[ext]",
+      name: "[path][name].[hash].[ext]",
+      outputPath: "images/",
+      scalings: { "@1.5x": 1.5, "@2x": 2, "@3x": 3 },
       esModule: false
     }
   }
@@ -51,6 +54,7 @@ module.exports = {
   entry: [
     // load any web API polyfills
     // path.resolve(appDirectory, 'polyfills-web.js'),
+
     // your web-specific entry file
     path.resolve(appDirectory, "index.web.js")
   ],
