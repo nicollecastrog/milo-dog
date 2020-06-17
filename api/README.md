@@ -12,7 +12,11 @@ Once running, this api can be accessed at [http://localhost:4000/](http://localh
 
 1. From the root of this monorepo, run:
 
-`COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 yarn docker-compose:dev up -d api`
+   `yarn start:api:dev`
+
+   Alternatively, from within this directory (`/api`), you can run:
+
+   `yarn start:docker`
 
 **Using local development:**
 
@@ -30,10 +34,12 @@ Once running, this api can be accessed at [http://localhost:4000/](http://localh
 
 From project root: `yarn run-test:api:dev`
 
+Or, from within this directory (`/api`), run: `yarn test:docker`
+
 **To run tests locally:**
 
 From within this directory (`/api`):
 
-1. `yarn`
+1. `yarn` => to ensure you have the latest modules installed
 
 1. `yarn test`

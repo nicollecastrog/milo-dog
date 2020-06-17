@@ -4,3 +4,4 @@ coverage/
 
 # Run & Build
 node_modules/
+dist/

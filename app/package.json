@@ -5,15 +5,22 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint": "yarn eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn typecheck && yarn lint --fix",
     "start": "react-native start",
+    "start:docker": "cd .. && yarn start:app:dev",
     "test": "jest",
-    "typecheck": "tsc"
+    "test:docker": "cd .. && yarn run-test:app:dev",
+    "test:update": "jest --updateSnapshot",
+    "typecheck": "tsc --project ./",
+    "web": "yarn webpack-dev-server -d --config ./web/webpack.config.js --colors",
+    "web:prod": "yarn webpack -p --config ./web/webpack.config.js"
   },
   "dependencies": {
     "react": "16.11.0",
-    "react-native": "0.62.2"
+    "react-dom": "^16.13.1",
+    "react-native": "0.62.2",
+    "react-native-web": "^0.12.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -23,12 +30,19 @@
     "@types/react-native": "^0.62.0",
     "@types/react-test-renderer": "16.9.2",
     "babel-jest": "^24.9.0",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-react-native-web": "^0.12.3",
     "eslint": "^6.5.1",
+    "html-webpack-plugin": "^4.3.0",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.58.0",
     "prettier": "^2.0.4",
+    "react-native-web-image-loader": "^0.1.1",
     "react-test-renderer": "16.11.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
   },
   "jest": {
     "preset": "react-native",
