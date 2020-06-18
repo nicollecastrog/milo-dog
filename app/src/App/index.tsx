@@ -1,14 +1,7 @@
 import React from "react";
-import {
-  Image,
-  Platform,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View
-} from "react-native";
+import { SafeAreaView, ScrollView, StatusBar, StyleSheet } from "react-native";
+
+import Home from "../screens/Home";
 
 const App = () => {
   return (
@@ -19,20 +12,7 @@ const App = () => {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}
         >
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionTitle}>milo.dog</Text>
-            <View>
-              <Text style={styles.sectionDescription}>
-                A massively over-engineered webapp about a small sausage dog
-              </Text>
-            </View>
-            <View style={styles.sectionImageWrapper}>
-              <Image
-                style={styles.sectionImage}
-                source={require("./images/dog/dog.png")}
-              />
-            </View>
-          </View>
+          <Home />
         </ScrollView>
       </SafeAreaView>
     </>
@@ -46,37 +26,6 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
     backgroundColor: "white"
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: "600",
-    color: "black"
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: "400",
-    color: "#161F26"
-  },
-  sectionImageWrapper: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    paddingVertical: 20
-  },
-  sectionImage: {
-    resizeMode: "contain",
-    flex: 1,
-    aspectRatio: 1.82,
-    ...Platform.select({
-      web: {
-        height: 200
-      }
-    })
   }
 });
 
