@@ -1,4 +1,4 @@
-import { throwIfInvalidBoard, Point } from "./shared";
+import { throwIfInvalidBoard, Point } from "../shared";
 
 interface State {
   columns: number | undefined;

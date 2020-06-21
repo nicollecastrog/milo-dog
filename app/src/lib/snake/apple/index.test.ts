@@ -1,8 +1,8 @@
-import apple from "./apple";
+import apple from "./index";
 import {
   missingStateValidation,
   minimumColumnsAndRowsValues
-} from "./common.test";
+} from "../common.test";
 
 const dummySnake = [{ x: 2, y: 2 }];
 

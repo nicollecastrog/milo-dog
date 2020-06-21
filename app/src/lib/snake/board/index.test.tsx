@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text } from "react-native";
-import board from "./board";
+import board from "./index";
 import {
   missingStateValidation,
   minimumColumnsAndRowsValues
-} from "./common.test";
+} from "../common.test";
 
 const DummyCellComponent = () => (
   <View>
