@@ -57,7 +57,8 @@
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "testPathIgnorePatterns": [
       "\\.snap$",
-      "<rootDir>/node_modules/"
+      "<rootDir>/node_modules/",
+      "common.test.ts$"
     ],
     "cacheDirectory": ".jest/cache",
     "collectCoverage": true,

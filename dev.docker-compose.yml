@@ -20,7 +20,7 @@ services:
     # volume allows us to mount in app code directly into a running container
     # if we update source code, then the changes will take effect immediately
     volumes:
-      - "./api:/app"
+      - "./api/src:/app/src"
     <<: *api-defaults
   apiTest:
     build:

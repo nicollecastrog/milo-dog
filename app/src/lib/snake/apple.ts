@@ -1,9 +1,4 @@
-import {
-  isUndefined,
-  throwMissingParamError,
-  throwBelowTenError,
-  Point
-} from "./shared";
+import { throwIfInvalidBoard, Point } from "./shared";
 
 interface State {
   columns: number | undefined;
@@ -11,6 +6,7 @@ interface State {
   blocked: Array<Point> | undefined;
 }
 
+// helper functions
 const random = (min: number, max: number) =>
   Math.floor(Math.random() * max) + min;
 
@@ -22,29 +18,15 @@ const generatePoint = (columns: number, rows: number) => ({
 const randomPointIsBlocked = (point: Point, blocked: Array<Point>) =>
   !!blocked.find((el) => el.x === point.x && el.y === point.y);
 
+// main function
 const apple = ({ columns, rows, blocked }: State) => {
   // state is fully defined
-  if (isUndefined(columns)) {
-    throwMissingParamError("columns");
-  }
-  if (isUndefined(rows)) {
-    throwMissingParamError("rows");
-  }
-  if (isUndefined(blocked)) {
-    throwMissingParamError("blocked");
+  if (columns === undefined || rows === undefined || blocked === undefined) {
+    throw new Error("missing state param");
   }
 
-  if (!columns || !rows || !blocked) {
-    return;
-  }
-
-  // rows and columns cannot be less than 10, to allow for better gameplay
-  if (rows < 10) {
-    throwBelowTenError("rows");
-  }
-  if (columns < 10) {
-    throwBelowTenError("columns");
-  }
+  // columns and rows cannot be less than 10, to allow for better gameplay
+  throwIfInvalidBoard(columns, rows);
 
   // handle if the whole board is blocked
   if (blocked.length === rows * columns) {

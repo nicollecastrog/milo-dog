@@ -1,4 +1,8 @@
 import apple from "./apple";
+import {
+  missingStateValidation,
+  minimumColumnsAndRowsValues
+} from "./common.test";
 
 const dummySnake = [{ x: 2, y: 2 }];
 
@@ -18,24 +22,10 @@ const createLongSnake = (n: number) => {
 
 describe("apple", () => {
   describe("missing state", () => {
-    test("returns an error if the state doesn't contain 'columns'", () => {
-      expect(() => {
-        apple({
-          columns: undefined,
-          rows: 10,
-          blocked: dummySnake
-        });
-      }).toThrow();
-    });
-
-    test("returns an error if the state doesn't contain 'rows'", () => {
-      expect(() => {
-        apple({
-          columns: 10,
-          rows: undefined,
-          blocked: dummySnake
-        });
-      }).toThrow();
+    missingStateValidation(apple, {
+      columns: 10,
+      rows: 10,
+      blocked: dummySnake
     });
 
     test("returns an error if the state doesn't contain 'blocked'", () => {
@@ -50,44 +40,10 @@ describe("apple", () => {
   });
 
   describe("minimum columns/rows values", () => {
-    test("returns an error if 'columns' is less than 10", () => {
-      expect(() => {
-        apple({
-          columns: 9,
-          rows: 10,
-          blocked: dummySnake
-        });
-      }).toThrow();
-    });
-
-    test("returns an error if 'rows' is less than 10", () => {
-      expect(() => {
-        apple({
-          columns: 10,
-          rows: 9,
-          blocked: dummySnake
-        });
-      }).toThrow();
-    });
-
-    test("does not return an error if 'columns' and 'rows' are 10", () => {
-      expect(() => {
-        apple({
-          columns: 10,
-          rows: 10,
-          blocked: dummySnake
-        });
-      }).not.toThrow();
-    });
-
-    test("does not return an error if 'columns' and 'rows' are more than 10", () => {
-      expect(() => {
-        apple({
-          columns: 12,
-          rows: 12,
-          blocked: dummySnake
-        });
-      }).not.toThrow();
+    minimumColumnsAndRowsValues(apple, {
+      columns: 10,
+      rows: 10,
+      blocked: dummySnake
     });
   });
 
@@ -98,8 +54,8 @@ describe("apple", () => {
         rows: 12,
         blocked: dummySnake
       });
-      expect(typeof (result || {}).x).toBe("number");
-      expect(typeof (result || {}).y).toBe("number");
+      expect(typeof result.x).toBe("number");
+      expect(typeof result.y).toBe("number");
     });
 
     test("returns an x,y point which is not blocked", () => {

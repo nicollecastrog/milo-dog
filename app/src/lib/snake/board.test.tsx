@@ -1,6 +1,10 @@
 import React from "react";
 import { View, Text } from "react-native";
 import board from "./board";
+import {
+  missingStateValidation,
+  minimumColumnsAndRowsValues
+} from "./common.test";
 
 const DummyCellComponent = () => (
   <View>
@@ -10,24 +14,10 @@ const DummyCellComponent = () => (
 
 describe("board", () => {
   describe("missing state", () => {
-    test("returns an error if the state doesn't contain 'columns'", () => {
-      expect(() => {
-        board({
-          columns: undefined,
-          rows: 10,
-          cell: DummyCellComponent
-        });
-      }).toThrow();
-    });
-
-    test("returns an error if the state doesn't contain 'rows'", () => {
-      expect(() => {
-        board({
-          columns: 10,
-          rows: undefined,
-          cell: DummyCellComponent
-        });
-      }).toThrow();
+    missingStateValidation(board, {
+      columns: 10,
+      rows: 10,
+      cell: DummyCellComponent
     });
 
     test("returns an error if the state doesn't contain 'cell'", () => {
@@ -42,44 +32,10 @@ describe("board", () => {
   });
 
   describe("minimum columns/rows values", () => {
-    test("returns an error if 'columns' is less than 10", () => {
-      expect(() => {
-        board({
-          columns: 9,
-          rows: 10,
-          cell: DummyCellComponent
-        });
-      }).toThrow();
-    });
-
-    test("returns an error if 'rows' is less than 10", () => {
-      expect(() => {
-        board({
-          columns: 10,
-          rows: 9,
-          cell: DummyCellComponent
-        });
-      }).toThrow();
-    });
-
-    test("does not return an error if 'columns' and 'rows' are 10", () => {
-      expect(() => {
-        board({
-          columns: 10,
-          rows: 10,
-          cell: DummyCellComponent
-        });
-      }).not.toThrow();
-    });
-
-    test("does not return an error if 'columns' and 'rows' are more than 10", () => {
-      expect(() => {
-        board({
-          columns: 12,
-          rows: 12,
-          cell: DummyCellComponent
-        });
-      }).not.toThrow();
+    minimumColumnsAndRowsValues(board, {
+      columns: 10,
+      rows: 10,
+      cell: DummyCellComponent
     });
   });
 

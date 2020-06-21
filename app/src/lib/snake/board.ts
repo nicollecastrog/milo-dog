@@ -1,8 +1,4 @@
-import {
-  isUndefined,
-  throwMissingParamError,
-  throwBelowTenError
-} from "./shared";
+import { throwIfInvalidBoard } from "./shared";
 
 interface State {
   columns: number | undefined;
@@ -12,27 +8,12 @@ interface State {
 
 const board = ({ columns, rows, cell }: State) => {
   // state is fully defined
-  if (isUndefined(columns)) {
-    throwMissingParamError("columns");
-  }
-  if (isUndefined(rows)) {
-    throwMissingParamError("rows");
-  }
-  if (isUndefined(cell)) {
-    throwMissingParamError("cell");
-  }
-
-  if (!columns || !rows || !cell) {
-    return;
+  if (columns === undefined || rows === undefined || cell === undefined) {
+    throw new Error("missing state param");
   }
 
   // rows and columns cannot be less than 10, to allow for better gameplay
-  if (rows < 10) {
-    throwBelowTenError("rows");
-  }
-  if (columns < 10) {
-    throwBelowTenError("columns");
-  }
+  throwIfInvalidBoard(columns, rows);
 
   const singleRow = Array.from(Array(columns), () => cell);
   const arrayOfRows = Array.from(Array(rows), () => singleRow);
