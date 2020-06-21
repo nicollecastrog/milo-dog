@@ -1,18 +1,14 @@
+import {
+  isUndefined,
+  throwMissingParamError,
+  throwBelowTenError
+} from "./shared";
+
 interface State {
   columns: number | undefined;
   rows: number | undefined;
   cell: any;
 }
-
-const isUndefined = (data: any) => data === undefined;
-
-const throwMissingParamError = (data: string) => {
-  throw new Error(`missing state param: ${data}`);
-};
-
-const throwBelowTenError = (data: string) => {
-  throw new Error(`incorrect state param: ${data} cannot be below 10`);
-};
 
 const board = ({ columns, rows, cell }: State) => {
   // state is fully defined
@@ -26,11 +22,15 @@ const board = ({ columns, rows, cell }: State) => {
     throwMissingParamError("cell");
   }
 
+  if (!columns || !rows || !cell) {
+    return;
+  }
+
   // rows and columns cannot be less than 10, to allow for better gameplay
-  if (rows && rows < 10) {
+  if (rows < 10) {
     throwBelowTenError("rows");
   }
-  if (columns && columns < 10) {
+  if (columns < 10) {
     throwBelowTenError("columns");
   }
 

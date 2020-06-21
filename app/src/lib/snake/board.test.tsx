@@ -122,7 +122,7 @@ describe("board", () => {
         rows: 12,
         cell: DummyCellComponent
       });
-      expect(result).toHaveLength(12);
+      expect(result && result).toHaveLength(12);
     });
 
     test("returns an array whose items are arrays containing cells", () => {
@@ -132,7 +132,9 @@ describe("board", () => {
         cell: DummyCellComponent
       });
 
-      expect(result[0]).toEqual(expect.arrayContaining([DummyCellComponent]));
+      expect(result && result[0]).toEqual(
+        expect.arrayContaining([DummyCellComponent])
+      );
     });
 
     test("returns an array whose items are arrays of length equal to the number of columns", () => {
@@ -142,7 +144,7 @@ describe("board", () => {
         cell: DummyCellComponent
       });
 
-      expect(result[0]).toHaveLength(15);
+      expect(result && result[0]).toHaveLength(15);
     });
   });
 });
