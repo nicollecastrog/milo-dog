@@ -56,7 +56,7 @@ describe("board", () => {
         cellCreator: dummyCellCreator
       });
 
-      expect(result[0]).toHaveLength(15);
+      expect(Array.isArray(result) && result[0]).toHaveLength(15);
     });
 
     describe("'cellCreator'", () => {
@@ -67,7 +67,9 @@ describe("board", () => {
           cellCreator: dummyCellCreator
         });
 
-        expect(result[0]).toEqual(expect.arrayContaining([dummyCellCreator()]));
+        expect(Array.isArray(result) && result[0]).toEqual(
+          expect.arrayContaining([dummyCellCreator()])
+        );
       });
     });
   });

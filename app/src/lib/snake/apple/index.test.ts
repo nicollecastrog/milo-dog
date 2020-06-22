@@ -54,8 +54,12 @@ describe("apple", () => {
         rows: 12,
         blocked: dummySnake
       });
-      expect(typeof result.x).toBe("number");
-      expect(typeof result.y).toBe("number");
+      expect(result).toEqual(
+        expect.objectContaining({
+          x: expect.any(Number),
+          y: expect.any(Number)
+        })
+      );
     });
 
     test("returns an x,y point which is not blocked", () => {

@@ -1,30 +1,24 @@
-import { throwIfInvalidBoard, Point, CardinalDirections } from "../shared";
+import { Point, CardinalDirections, EAST } from "../types";
+import withValidState from "../withValidState";
 
 interface State {
-  columns: number | undefined;
-  rows: number | undefined;
-  snake: Array<Point> | undefined;
-  moves: Array<CardinalDirections> | undefined;
+  columns: number;
+  rows: number;
+  snake: Array<Point>;
+  moves: Array<CardinalDirections>;
 }
 
+const defaultState: State = {
+  columns: 10,
+  rows: 10,
+  snake: [{ x: 2, y: 2 }],
+  moves: [EAST]
+};
+
+const modulusWithWrapAfterBoundary = (position: number, boundary: number) =>
+  ((position % boundary) + boundary) % boundary;
+
 const moveHead = ({ columns, rows, snake, moves }: State) => {
-  // state is fully defined
-  if (
-    columns === undefined ||
-    rows === undefined ||
-    snake === undefined ||
-    moves === undefined
-  ) {
-    throw new Error("missing state param");
-  }
-
-  // columns and rows cannot be less than 10, to allow for better gameplay
-  throwIfInvalidBoard(columns, rows);
-
-  // main logic
-  const modulusWithWrapAfterBoundary = (position: number, boundary: number) =>
-    ((position % boundary) + boundary) % boundary;
-
   // snake[0] => the current head of the snake
   // moves[0] => the next pending cardinal move
   const nextSnakeX = snake[0].x + moves[0].x;
@@ -36,4 +30,4 @@ const moveHead = ({ columns, rows, snake, moves }: State) => {
   };
 };
 
-export default moveHead;
+export default withValidState(moveHead, defaultState);

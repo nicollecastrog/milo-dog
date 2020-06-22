@@ -1,21 +1,20 @@
-import { throwIfInvalidBoard, Point } from "../shared";
+import { Point } from "../types";
+import withValidState from "../withValidState";
 import { generatePoint, randomPointIsBlocked } from "./helpers";
 
 interface State {
-  columns: number | undefined;
-  rows: number | undefined;
-  blocked: Array<Point> | undefined;
+  columns: number;
+  rows: number;
+  blocked: Array<Point>;
 }
 
+const defaultState: State = {
+  columns: 10,
+  rows: 10,
+  blocked: [{ x: 2, y: 2 }]
+};
+
 const apple = ({ columns, rows, blocked }: State) => {
-  // state is fully defined
-  if (columns === undefined || rows === undefined || blocked === undefined) {
-    throw new Error("missing state param");
-  }
-
-  // columns and rows cannot be less than 10, to allow for better gameplay
-  throwIfInvalidBoard(columns, rows);
-
   // handle if the whole board is blocked
   if (blocked.length === rows * columns) {
     throw new Error("Game over: no more free spaces for apples");
@@ -31,4 +30,4 @@ const apple = ({ columns, rows, blocked }: State) => {
   return randomPoint;
 };
 
-export default apple;
+export default withValidState(apple, defaultState);

@@ -3,7 +3,7 @@ import {
   missingStateValidation,
   minimumColumnsAndRowsValues
 } from "../common.test";
-import { NORTH, SOUTH, EAST, WEST } from "../shared";
+import { NORTH, SOUTH, EAST, WEST } from "../types";
 
 const dummySnake = [
   { x: 2, y: 2 },
@@ -28,6 +28,17 @@ describe("moveHead", () => {
           rows: 10,
           snake: undefined,
           moves: dummyMoves
+        });
+      }).toThrow();
+    });
+
+    test("returns an error if the state doesn't contain 'moves'", () => {
+      expect(() => {
+        moveHead({
+          columns: 10,
+          rows: 10,
+          snake: dummySnake,
+          moves: undefined
         });
       }).toThrow();
     });
