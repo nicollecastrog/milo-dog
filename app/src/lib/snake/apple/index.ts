@@ -1,22 +1,11 @@
 import { throwIfInvalidBoard, Point } from "../shared";
+import { generatePoint, randomPointIsBlocked } from "./helpers";
 
 interface State {
   columns: number | undefined;
   rows: number | undefined;
   blocked: Array<Point> | undefined;
 }
-
-// helper functions
-const random = (min: number, max: number) =>
-  Math.floor(Math.random() * max) + min;
-
-const generatePoint = (columns: number, rows: number) => ({
-  x: random(0, columns),
-  y: random(0, rows)
-});
-
-const randomPointIsBlocked = (point: Point, blocked: Array<Point>) =>
-  !!blocked.find((el) => el.x === point.x && el.y === point.y);
 
 // main function
 const apple = ({ columns, rows, blocked }: State) => {

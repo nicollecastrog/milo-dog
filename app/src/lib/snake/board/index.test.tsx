@@ -6,7 +6,7 @@ import {
   minimumColumnsAndRowsValues
 } from "../common.test";
 
-const DummyCellComponent = () => (
+const dummyCellCreator = () => (
   <View>
     <Text>a dummy cell</Text>
   </View>
@@ -17,15 +17,15 @@ describe("board", () => {
     missingStateValidation(board, {
       columns: 10,
       rows: 10,
-      cell: DummyCellComponent
+      cell: dummyCellCreator
     });
 
-    test("returns an error if the state doesn't contain 'cell'", () => {
+    test("returns an error if the state doesn't contain 'cellCreator'", () => {
       expect(() => {
         board({
           columns: 10,
           rows: 10,
-          cell: undefined
+          cellCreator: undefined
         });
       }).toThrow();
     });
@@ -35,39 +35,7 @@ describe("board", () => {
     minimumColumnsAndRowsValues(board, {
       columns: 10,
       rows: 10,
-      cell: DummyCellComponent
-    });
-  });
-
-  describe("accepts any defined value of 'cell'", () => {
-    test("does not return an error if 'cell' is a component", () => {
-      expect(() => {
-        board({
-          columns: 10,
-          rows: 10,
-          cell: DummyCellComponent
-        });
-      }).not.toThrow();
-    });
-
-    test("does not return an error if 'cell' is a string", () => {
-      expect(() => {
-        board({
-          columns: 10,
-          rows: 10,
-          cell: "x"
-        });
-      }).not.toThrow();
-    });
-
-    test("does not return an error if 'cell' is a number", () => {
-      expect(() => {
-        board({
-          columns: 10,
-          rows: 10,
-          cell: 0
-        });
-      }).not.toThrow();
+      cellCreator: dummyCellCreator
     });
   });
 
@@ -76,31 +44,31 @@ describe("board", () => {
       const result = board({
         columns: 10,
         rows: 12,
-        cell: DummyCellComponent
+        cellCreator: dummyCellCreator
       });
-      expect(result && result).toHaveLength(12);
-    });
-
-    test("returns an array whose items are arrays containing cells", () => {
-      const result = board({
-        columns: 20,
-        rows: 10,
-        cell: DummyCellComponent
-      });
-
-      expect(result && result[0]).toEqual(
-        expect.arrayContaining([DummyCellComponent])
-      );
+      expect(result).toHaveLength(12);
     });
 
     test("returns an array whose items are arrays of length equal to the number of columns", () => {
       const result = board({
         columns: 15,
         rows: 12,
-        cell: DummyCellComponent
+        cellCreator: dummyCellCreator
       });
 
-      expect(result && result[0]).toHaveLength(15);
+      expect(result[0]).toHaveLength(15);
+    });
+
+    describe("'cellCreator'", () => {
+      test("returns an array whose items are arrays containing the result of the 'cellCreator'", () => {
+        const result = board({
+          columns: 12,
+          rows: 10,
+          cellCreator: dummyCellCreator
+        });
+
+        expect(result[0]).toEqual(expect.arrayContaining([dummyCellCreator()]));
+      });
     });
   });
 });

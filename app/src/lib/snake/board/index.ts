@@ -1,22 +1,33 @@
-import { throwIfInvalidBoard } from "../shared";
+import { Point, throwIfInvalidBoard } from "../shared";
+
+type CellCreator = (point: Point) => any;
 
 interface State {
   columns: number | undefined;
   rows: number | undefined;
-  cell: any;
+  cellCreator: CellCreator | undefined;
 }
 
-const board = ({ columns, rows, cell }: State) => {
+const board = ({ columns, rows, cellCreator }: State) => {
   // state is fully defined
-  if (columns === undefined || rows === undefined || cell === undefined) {
+  if (
+    columns === undefined ||
+    rows === undefined ||
+    cellCreator === undefined
+  ) {
     throw new Error("missing state param");
   }
 
   // rows and columns cannot be less than 10, to allow for better gameplay
   throwIfInvalidBoard(columns, rows);
 
-  const singleRow = Array.from(Array(columns), () => cell);
-  const arrayOfRows = Array.from(Array(rows), () => singleRow);
+  // main logic
+  const createSingleRow = (y: number) =>
+    Array.from(Array(columns), (_, i: number) => cellCreator({ x: i, y }));
+
+  const arrayOfRows = Array.from(Array(rows), (_, i: number) =>
+    createSingleRow(i)
+  );
 
   return arrayOfRows;
 };
