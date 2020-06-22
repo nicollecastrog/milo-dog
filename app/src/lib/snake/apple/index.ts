@@ -7,7 +7,6 @@ interface State {
   blocked: Array<Point> | undefined;
 }
 
-// main function
 const apple = ({ columns, rows, blocked }: State) => {
   // state is fully defined
   if (columns === undefined || rows === undefined || blocked === undefined) {
