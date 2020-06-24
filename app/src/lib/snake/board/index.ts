@@ -1,11 +1,5 @@
-import { CellCreator } from "../types";
+import { State } from "../types";
 import withValidState from "../withValidState";
-
-interface State {
-  columns: number;
-  rows: number;
-  cellCreator: CellCreator;
-}
 
 const board = ({ columns, rows, cellCreator }: State) => {
   const createSingleRow = (y: number) =>

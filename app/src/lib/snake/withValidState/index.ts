@@ -1,18 +1,6 @@
-import { Point, CardinalDirections, CellCreator } from "../types";
+import { boundaryEnd, defaultState } from "../shared";
 
-interface ValidatedState {
-  columns: number;
-  rows: number;
-  blocked?: Array<Point>;
-  cellCreator?: CellCreator;
-  moves?: Array<CardinalDirections>;
-  snake?: Array<Point>;
-  apple?: Point;
-}
-
-type StateParams = keyof ValidatedState;
-
-const throwBelowTenError = (data: string) => {
+const throwBelowBoundaryMinimumError = (data: string) => {
   throw new Error(`incorrect state param: ${data} cannot be below 10`);
 };
 
@@ -23,20 +11,19 @@ function withValidState<T extends (...args: any[]) => any>(
   return (...args: Parameters<T>): ReturnType<T> => {
     // state is fully defined
     const state = args[0];
-    const stateParams = Object.keys(state);
 
-    (stateParams as Array<StateParams>).map((property) => {
+    Object.keys(defaultState).map((property) => {
       if (state[property] === undefined) {
         throw new Error(`missing state param: ${property}`);
       }
     });
 
-    // columns and rows cannot be less than 10, to allow for better gameplay
-    if (state.columns && state.columns < 10) {
-      throwBelowTenError("rows");
+    // columns and rows cannot be less than ${boundaryEnd}, to allow for better gameplay
+    if (state.columns && state.columns < boundaryEnd) {
+      throwBelowBoundaryMinimumError("rows");
     }
-    if (state.rows && state.rows < 10) {
-      throwBelowTenError("columns");
+    if (state.rows && state.rows < boundaryEnd) {
+      throwBelowBoundaryMinimumError("columns");
     }
 
     return moduleFunction(...args);

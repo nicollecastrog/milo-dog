@@ -1,14 +1,9 @@
-import { Point } from "../types";
+import { State } from "../types";
 import withValidState from "../withValidState";
 import { generatePoint, randomPointIsBlocked } from "./helpers";
 
-interface State {
-  columns: number;
-  rows: number;
-  blocked: Array<Point>;
-}
-
-const apple = ({ columns, rows, blocked }: State) => {
+const apple = ({ columns, rows, snake }: State) => {
+  const blocked = snake;
   // handle if the whole board is blocked
   if (blocked.length === rows * columns) {
     throw new Error("Game over: no more free spaces for apples");

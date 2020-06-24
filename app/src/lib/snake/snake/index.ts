@@ -1,19 +1,10 @@
-import { Point, CardinalDirections } from "../types";
+import { Point, State } from "../types";
+import { defaultSnake } from "../shared";
 import withValidState from "../withValidState";
 import moveHead from "../moveHead";
 
-interface State {
-  columns: number;
-  rows: number;
-  snake: Array<Point>;
-  moves: Array<CardinalDirections>;
-  apple: Point;
-}
-
-const defaultSnake = [{ x: 2, y: 2 }];
-
 const samePoint = (p1: Point, p2: Point) => p1.x === p2.x && p1.y === p2.y;
-const dropLast = (arr: Array<any>) => arr.slice(0, arr.length - 1);
+const dropEnd = (arr: Array<any>) => arr.slice(0, arr.length - 1);
 
 const snake = (state: State) => {
   const nextHead = moveHead(state);
@@ -31,7 +22,7 @@ const snake = (state: State) => {
 
   // add a new head, and remove the end of the tail,
   // this moves the snake along the chosen direction, whilst keeping the same length of snake
-  return [nextHead].concat(dropLast(state.snake));
+  return [nextHead].concat(dropEnd(state.snake));
 };
 
 export default withValidState(snake);
