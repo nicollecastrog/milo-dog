@@ -7,12 +7,6 @@ interface State {
   cellCreator: CellCreator;
 }
 
-const defaultState: State = {
-  columns: 10,
-  rows: 10,
-  cellCreator: () => "x"
-};
-
 const board = ({ columns, rows, cellCreator }: State) => {
   const createSingleRow = (y: number) =>
     Array.from(Array(columns), (_, i: number) => cellCreator({ x: i, y }));
@@ -24,4 +18,4 @@ const board = ({ columns, rows, cellCreator }: State) => {
   return arrayOfRows;
 };
 
-export default withValidState(board, defaultState);
+export default withValidState(board);

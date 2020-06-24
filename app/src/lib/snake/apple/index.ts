@@ -8,12 +8,6 @@ interface State {
   blocked: Array<Point>;
 }
 
-const defaultState: State = {
-  columns: 10,
-  rows: 10,
-  blocked: [{ x: 2, y: 2 }]
-};
-
 const apple = ({ columns, rows, blocked }: State) => {
   // handle if the whole board is blocked
   if (blocked.length === rows * columns) {
@@ -30,4 +24,4 @@ const apple = ({ columns, rows, blocked }: State) => {
   return randomPoint;
 };
 
-export default withValidState(apple, defaultState);
+export default withValidState(apple);

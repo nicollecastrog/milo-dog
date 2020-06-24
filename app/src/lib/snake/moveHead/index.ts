@@ -1,4 +1,4 @@
-import { Point, CardinalDirections, EAST } from "../types";
+import { Point, CardinalDirections } from "../types";
 import withValidState from "../withValidState";
 
 interface State {
@@ -7,13 +7,6 @@ interface State {
   snake: Array<Point>;
   moves: Array<CardinalDirections>;
 }
-
-const defaultState: State = {
-  columns: 10,
-  rows: 10,
-  snake: [{ x: 2, y: 2 }],
-  moves: [EAST]
-};
 
 const modulusWithWrapAfterBoundary = (position: number, boundary: number) =>
   ((position % boundary) + boundary) % boundary;
@@ -30,4 +23,4 @@ const moveHead = ({ columns, rows, snake, moves }: State) => {
   };
 };
 
-export default withValidState(moveHead, defaultState);
+export default withValidState(moveHead);
