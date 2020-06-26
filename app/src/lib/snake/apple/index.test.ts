@@ -18,14 +18,14 @@ describe("apple", () => {
     const result = apple(dummyState);
     expect(result).toEqual(
       expect.objectContaining({
-        x: expect.any(Number),
-        y: expect.any(Number)
+        x: expect.toBeWithin(0, dummyState.columns),
+        y: expect.toBeWithin(0, dummyState.rows)
       })
     );
   });
 
   test("returns an x,y point which is not blocked", () => {
-    // create a snake that occupies 8x8 of the board:
+    // create a snake that occupies 8x8 of the 10x10 board:
     const longSnake = createLongSnake(8);
     const result = apple({
       ...dummyState,

@@ -35,6 +35,7 @@
     "eslint": "^6.5.1",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^24.9.0",
+    "jest-extended": "^0.11.5",
     "metro-react-native-babel-preset": "^0.58.0",
     "prettier": "^2.0.4",
     "react-native-web-image-loader": "^0.1.1",
@@ -54,6 +55,7 @@
       "json",
       "node"
     ],
+    "setupFilesAfterEnv": ["jest-extended"],
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "testPathIgnorePatterns": [
       "\\.snap$",
