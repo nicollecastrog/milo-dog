@@ -2,9 +2,7 @@ import { Point, State } from "../types";
 import { defaultSnake } from "../shared";
 import withValidState from "../withValidState";
 import moveHead from "../moveHead";
-
-const samePoint = (p1: Point, p2: Point) => p1.x === p2.x && p1.y === p2.y;
-const dropEnd = (arr: Point[]) => arr.slice(0, arr.length - 1);
+import { samePoint, dropEnd } from "../helpers";
 
 const snake = (state: State): Point[] => {
   const nextHead = moveHead(state);

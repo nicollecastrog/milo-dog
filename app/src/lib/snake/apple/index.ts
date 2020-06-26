@@ -1,9 +1,7 @@
 import { Point, State } from "../types";
 import withValidState from "../withValidState";
 import moveHead from "../moveHead";
-import { generatePoint, randomPointIsBlocked } from "./helpers";
-
-const samePoint = (p1: Point, p2: Point) => p1.x === p2.x && p1.y === p2.y;
+import { generatePoint, pointIsBlocked, samePoint } from "../helpers";
 
 const apple = (state: State): Point => {
   const { columns, rows, snake, apple: currentApple } = state;
@@ -23,7 +21,7 @@ const apple = (state: State): Point => {
   // generate random apple that does not land on snake (blocked points)
   let randomPoint = generatePoint(columns, rows);
 
-  while (randomPointIsBlocked(randomPoint, blocked)) {
+  while (pointIsBlocked(randomPoint, blocked)) {
     randomPoint = generatePoint(columns, rows);
   }
 

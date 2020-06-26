@@ -1,13 +1,8 @@
 import { minimumDimension, defaultState } from "../shared";
+import { throwBelowMinimumError } from "../helpers";
 import { State } from "../types";
 
 type StateParams = keyof State;
-
-const throwBelowMinimumError = (data: string) => {
-  throw new Error(
-    `incorrect state param: ${data} cannot be below ${minimumDimension}`
-  );
-};
 
 const withValidState = <A extends [State, ...any[]], R>(
   moduleFunction: (...a: A) => R
@@ -22,10 +17,10 @@ const withValidState = <A extends [State, ...any[]], R>(
 
   // columns and rows cannot be less than ${minimumDimension}, to allow for better gameplay
   if (state.columns < minimumDimension) {
-    throwBelowMinimumError("columns");
+    throwBelowMinimumError("columns", minimumDimension);
   }
   if (state.rows < minimumDimension) {
-    throwBelowMinimumError("rows");
+    throwBelowMinimumError("rows", minimumDimension);
   }
 
   return moduleFunction(...args);

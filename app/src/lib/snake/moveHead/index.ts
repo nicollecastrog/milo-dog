@@ -1,5 +1,6 @@
 import { Point, CardinalDirections } from "../types";
 import withValidState from "../withValidState";
+import { modulusWithWrapAfterBoundary } from "../helpers";
 
 interface State {
   columns: number;
@@ -7,9 +8,6 @@ interface State {
   snake: Point[];
   moves: CardinalDirections[];
 }
-
-const modulusWithWrapAfterBoundary = (position: number, boundary: number) =>
-  ((position % boundary) + boundary) % boundary;
 
 const moveHead = ({ columns, rows, snake, moves }: State) => {
   // snake[0] => the current head of the snake
