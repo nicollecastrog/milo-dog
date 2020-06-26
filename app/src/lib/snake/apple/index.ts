@@ -1,7 +1,7 @@
 import { Point, State } from "../types";
 import withValidState from "../withValidState";
-import moveHead from "../snake/head";
-import { generatePoint, pointIsBlocked, samePoint } from "../helpers";
+import { generatePoint, pointIsBlocked } from "../helpers";
+import willEat from "../snake/eat";
 
 const apple = (state: State): Point => {
   const { columns, rows, snake, apple: currentApple } = state;
@@ -12,9 +12,7 @@ const apple = (state: State): Point => {
     throw new Error("Game over: no more free spaces for apples");
   }
 
-  const nextHead = moveHead(state);
-  const willEat = samePoint(currentApple, nextHead);
-  if (!willEat) {
+  if (!willEat(state)) {
     return currentApple;
   }
 

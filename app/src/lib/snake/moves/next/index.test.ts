@@ -1,7 +1,7 @@
 import { NORTH, SOUTH, EAST, WEST, dummyState } from "../../shared";
 import nextMove from "./index";
 
-describe("nextMove", () => {
+describe("moves/next", () => {
   test("returns 'moves' array with next move to be processed at the front (0th index)", () => {
     const result = nextMove({
       ...dummyState,

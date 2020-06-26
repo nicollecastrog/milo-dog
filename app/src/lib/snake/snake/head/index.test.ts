@@ -1,7 +1,7 @@
 import { NORTH, SOUTH, EAST, WEST, dummyState } from "../../shared";
 import moveHead from "./index";
 
-describe("moveHead", () => {
+describe("snake/head", () => {
   test("can handle moving head one slot EAST (x: x + 1)", () => {
     const result = moveHead({
       ...dummyState,

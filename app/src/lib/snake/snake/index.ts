@@ -1,8 +1,10 @@
 import { Point, State } from "../types";
 import { defaultSnake } from "../shared";
 import withValidState from "../withValidState";
-import moveHead from "./head";
 import { samePoint, dropEnd } from "../helpers";
+
+import moveHead from "./head";
+import willEat from "./eat";
 
 const snake = (state: State): Point[] => {
   const nextHead = moveHead(state);
@@ -12,8 +14,7 @@ const snake = (state: State): Point[] => {
     return defaultSnake; // TODO: throw error? "freeze" game upon crash?
   }
 
-  const willEat = samePoint(state.apple, nextHead);
-  if (willEat) {
+  if (willEat(state)) {
     // add a new head, but don't remove the end of the tail, this elongates the snake
     return [nextHead].concat(state.snake);
   }
