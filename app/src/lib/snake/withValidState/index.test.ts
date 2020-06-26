@@ -1,7 +1,7 @@
 import withValidState from "./index";
 import { State } from "../types";
 import {
-  boundaryEnd,
+  minimumDimension,
   defaultApple,
   dummyCellCreator,
   dummyState,
@@ -17,10 +17,10 @@ const dummyModule = (state: State) => {
 
 describe("withValidState", () => {
   describe("missing state", () => {
-    test("returns an error if there's a missing param of the module state", () => {
+    test("returns an error if there's a missing param at runtime", () => {
       const missingParamState = {
-        columns: boundaryEnd,
-        rows: boundaryEnd,
+        columns: minimumDimension,
+        rows: minimumDimension,
         apple: defaultApple,
         cellCreator: dummyCellCreator,
         moves: [EAST]
@@ -28,14 +28,16 @@ describe("withValidState", () => {
       };
 
       expect(() => {
-        withValidState(dummyModule)(missingParamState);
+        // `any` used to opt out of typing the state as we're purposefully
+        // providing an invalid state to test that this is handled at runtime
+        withValidState(dummyModule)(missingParamState as any);
       }).toThrow();
     });
 
-    test("returns an error if there's an undefined param of the module state", () => {
+    test("returns an error if there's an undefined param at runtime", () => {
       const undefinedParamState = {
-        columns: boundaryEnd,
-        rows: boundaryEnd,
+        columns: minimumDimension,
+        rows: minimumDimension,
         apple: defaultApple,
         cellCreator: dummyCellCreator,
         moves: [EAST],
@@ -43,7 +45,8 @@ describe("withValidState", () => {
       };
 
       expect(() => {
-        withValidState(dummyModule)(undefinedParamState);
+        // see comment above for note about usage of `any` below
+        withValidState(dummyModule)(undefinedParamState as any);
       }).toThrow();
     });
   });

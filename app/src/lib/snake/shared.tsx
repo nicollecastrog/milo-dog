@@ -19,11 +19,11 @@ export const dummyCellCreator = () => (
   </View>
 );
 
-export const boundaryEnd = 10;
+export const minimumDimension = 10;
 
 export const dummyState = {
-  columns: boundaryEnd,
-  rows: boundaryEnd,
+  columns: minimumDimension,
+  rows: minimumDimension,
   apple: defaultApple,
   cellCreator: dummyCellCreator,
   moves: [EAST],
