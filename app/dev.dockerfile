@@ -5,12 +5,12 @@ FROM node:${node_version}-alpine AS base
 FROM base as test-build-env
 RUN --mount=type=cache,target=/var/cache/apk apk add --no-cache \
   yarn
+RUN --mount=type=cache,target=/home/ubuntu/.cache/yarn/v6 \
+  yarn
 
 FROM test-build-env AS test-dependencies
 WORKDIR /app
 COPY ./ ./
-RUN --mount=type=cache,target=/home/ubuntu/.cache/yarn/v6 \
-  yarn
 
 FROM base as watchman-runtime-dependencies
 RUN --mount=type=cache,target=/var/cache/apk apk add --no-cache \
@@ -38,6 +38,8 @@ FROM watchman-build-env as build-env
 RUN --mount=type=cache,target=/var/cache/apk apk add --no-cache \
   yarn \
   git
+RUN --mount=type=cache,target=/home/ubuntu/.cache/yarn/v6 \
+  yarn
 RUN git clone https://github.com/facebook/watchman.git -b v4.9.0 --depth 1
 RUN cd watchman && ./autogen.sh && ./configure --without-python --without-pcre --enable-lenient && make && make install
 RUN rm -rf watchman
@@ -45,8 +47,6 @@ RUN rm -rf watchman
 FROM build-env AS dependencies
 WORKDIR /app
 COPY ./ ./
-RUN --mount=type=cache,target=/home/ubuntu/.cache/yarn/v6 \
-  yarn
 
 EXPOSE 8081
 CMD yarn start
