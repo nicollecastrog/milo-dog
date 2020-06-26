@@ -11,7 +11,7 @@ const snake = (state: State) => {
 
   const willCrash = !!state.snake.find((point) => samePoint(point, nextHead));
   if (willCrash) {
-    return defaultSnake;
+    return defaultSnake; // TODO: throw error? "freeze" game upon crash?
   }
 
   const willEat = samePoint(state.apple, nextHead);

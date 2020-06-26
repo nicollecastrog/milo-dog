@@ -16,16 +16,14 @@ describe("board", () => {
       columns: 15
     });
 
-    expect(Array.isArray(result) && result[0]).toHaveLength(15);
+    expect(result[0]).toHaveLength(15);
   });
 
   describe("'cellCreator'", () => {
     test("returns an array whose items are arrays containing the result of the 'cellCreator'", () => {
       const result = board(dummyState);
 
-      expect(Array.isArray(result) && result[0]).toEqual(
-        expect.arrayContaining([dummyCellCreator()])
-      );
+      expect(result[0]).toEqual(expect.arrayContaining([dummyCellCreator()]));
     });
   });
 });
