@@ -1,4 +1,7 @@
 import { minimumDimension, defaultState } from "../shared";
+import { State } from "../types";
+
+type StateParams = keyof State;
 
 const throwBelowMinimumError = (data: string) => {
   throw new Error(
@@ -6,28 +9,26 @@ const throwBelowMinimumError = (data: string) => {
   );
 };
 
-function withValidState<T extends (...args: any[]) => any>(moduleFunction: T) {
-  // Return a new function that throws if the moduleFunction state isn't fully defined
-  return (...args: Parameters<T>): ReturnType<T> => {
-    // state is fully defined
-    const state = args[0];
+const withValidState = <A extends [State, ...any[]], R>(
+  moduleFunction: (...a: A) => R
+) => (...args: A): R => {
+  const state = args[0];
 
-    Object.keys(defaultState).map((property) => {
-      if (state[property] === undefined) {
-        throw new Error(`missing state param: ${property}`);
-      }
-    });
-
-    // columns and rows cannot be less than ${minimumDimension}, to allow for better gameplay
-    if (state.columns < minimumDimension) {
-      throwBelowMinimumError("columns");
+  (Object.keys(defaultState) as Array<StateParams>).map((property) => {
+    if (state[property] === undefined) {
+      throw new Error(`missing state param: ${property}`);
     }
-    if (state.rows < minimumDimension) {
-      throwBelowMinimumError("rows");
-    }
+  });
 
-    return moduleFunction(...args);
-  };
-}
+  // columns and rows cannot be less than ${minimumDimension}, to allow for better gameplay
+  if (state.columns < minimumDimension) {
+    throwBelowMinimumError("columns");
+  }
+  if (state.rows < minimumDimension) {
+    throwBelowMinimumError("rows");
+  }
+
+  return moduleFunction(...args);
+};
 
 export default withValidState;
