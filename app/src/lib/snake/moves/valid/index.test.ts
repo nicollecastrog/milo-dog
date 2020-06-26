@@ -1,5 +1,5 @@
-import validMove from "./valid";
-import { NORTH, SOUTH, EAST, WEST, dummyState } from "../shared";
+import { NORTH, SOUTH, EAST, WEST, dummyState } from "../../shared";
+import validMove from "./index";
 
 describe("validMove", () => {
   describe("move SOUTH", () => {

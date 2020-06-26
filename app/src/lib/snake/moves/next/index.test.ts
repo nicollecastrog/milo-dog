@@ -1,5 +1,5 @@
-import nextMove from "./next";
-import { NORTH, SOUTH, EAST, WEST, dummyState } from "../shared";
+import { NORTH, SOUTH, EAST, WEST, dummyState } from "../../shared";
+import nextMove from "./index";
 
 describe("nextMove", () => {
   test("returns 'moves' array with next move to be processed at the front (0th index)", () => {

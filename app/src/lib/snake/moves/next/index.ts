@@ -1,6 +1,6 @@
-import { CardinalDirections, State } from "../types";
-import withValidState from "../withValidState";
-import { dropFirst } from "../helpers";
+import { CardinalDirections, State } from "../../types";
+import withValidState from "../../withValidState";
+import { dropFirst } from "../../helpers";
 
 const nextMove = ({ moves }: State): CardinalDirections[] =>
   // keep repeating the last move, if only one is present

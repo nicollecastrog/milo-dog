@@ -1,5 +1,5 @@
-import { CardinalDirections, State } from "../types";
-import withValidState from "../withValidState";
+import { CardinalDirections, State } from "../../types";
+import withValidState from "../../withValidState";
 
 const validMove = ({ moves }: State, move: CardinalDirections): boolean => {
   const latestMove = moves[moves.length - 1];

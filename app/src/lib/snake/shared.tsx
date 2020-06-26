@@ -30,4 +30,5 @@ export const dummyState = {
   snake: defaultSnake
 };
 
+// default game state
 export { dummyState as defaultState };

@@ -1,5 +1,5 @@
-import { NORTH, EAST, WEST, dummyState } from "../shared";
-import addMove from "./add";
+import { NORTH, EAST, WEST, dummyState } from "../../shared";
+import addMove from "./index";
 
 describe("addMove", () => {
   test("returns updated 'moves' in state if move is valid", () => {
