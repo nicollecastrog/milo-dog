@@ -1,7 +1,7 @@
 import { NORTH, EAST, WEST, dummyState } from "../../shared";
 import addMove from "./index";
 
-describe("moves/add", () => {
+describe("snake/moves/add", () => {
   test("returns updated 'moves' in state if move is valid", () => {
     const result = addMove(
       {

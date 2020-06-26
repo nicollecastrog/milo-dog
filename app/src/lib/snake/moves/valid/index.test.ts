@@ -1,7 +1,7 @@
 import { NORTH, SOUTH, EAST, WEST, dummyState } from "../../shared";
 import validMove from "./index";
 
-describe("moves/valid", () => {
+describe("snake/moves/valid", () => {
   describe("move SOUTH", () => {
     test("returns false when move SOUTH follows move NORTH", () => {
       const result = validMove(

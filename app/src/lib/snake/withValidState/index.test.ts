@@ -15,7 +15,7 @@ const dummyModule = (state: State) => {
   };
 };
 
-describe("withValidState", () => {
+describe("snake/withValidState", () => {
   describe("missing state", () => {
     test("returns an error if there's a missing param at runtime", () => {
       const missingParamState = {

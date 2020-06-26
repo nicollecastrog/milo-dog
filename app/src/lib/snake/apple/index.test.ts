@@ -13,7 +13,7 @@ const createLongSnake = (n: number) => {
   return longSnake;
 };
 
-describe("apple", () => {
+describe("snake/apple", () => {
   test("returns an error if the whole board is blocked", () => {
     // create a snake that occupies the whole 10x10 board:
     const longSnake = createLongSnake(10);

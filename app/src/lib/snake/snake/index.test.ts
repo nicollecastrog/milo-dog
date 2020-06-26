@@ -1,7 +1,7 @@
 import snake from "./index";
 import { SOUTH, WEST, dummyState, defaultSnake } from "../shared";
 
-describe("snake", () => {
+describe("snake/snake", () => {
   describe("if snake crashes", () => {
     test("returns default snake position (ie: starts game over)", () => {
       const result = snake({

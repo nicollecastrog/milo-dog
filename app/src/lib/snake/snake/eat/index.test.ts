@@ -1,7 +1,7 @@
 import { EAST, dummyState } from "../../shared";
 import willEat from "./index";
 
-describe("snake/eat", () => {
+describe("snake/snake/eat", () => {
   test("returns true if snake's head WILL move into the apple's x,y point", () => {
     const result = willEat({
       ...dummyState,
