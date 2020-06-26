@@ -1,7 +1,7 @@
 import { Point, State } from "../types";
 import { defaultSnake } from "../shared";
 import withValidState from "../withValidState";
-import moveHead from "../moveHead";
+import moveHead from "./head";
 import { samePoint, dropEnd } from "../helpers";
 
 const snake = (state: State): Point[] => {

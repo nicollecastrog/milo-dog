@@ -1,6 +1,6 @@
-import { Point, CardinalDirections } from "../types";
-import withValidState from "../withValidState";
-import { modulusWithWrapAfterBoundary } from "../helpers";
+import { Point, CardinalDirections } from "../../types";
+import withValidState from "../../withValidState";
+import { modulusWithWrapAfterBoundary } from "../../helpers";
 
 interface State {
   columns: number;

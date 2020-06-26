@@ -1,5 +1,5 @@
+import { NORTH, SOUTH, EAST, WEST, dummyState } from "../../shared";
 import moveHead from "./index";
-import { NORTH, SOUTH, EAST, WEST, dummyState } from "../shared";
 
 describe("moveHead", () => {
   test("can handle moving head one slot EAST (x: x + 1)", () => {

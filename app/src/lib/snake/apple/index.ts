@@ -1,6 +1,6 @@
 import { Point, State } from "../types";
 import withValidState from "../withValidState";
-import moveHead from "../moveHead";
+import moveHead from "../snake/head";
 import { generatePoint, pointIsBlocked, samePoint } from "../helpers";
 
 const apple = (state: State): Point => {
