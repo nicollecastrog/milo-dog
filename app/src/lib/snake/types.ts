@@ -34,6 +34,6 @@ export interface State {
   rows: number;
   apple: Point;
   cellCreator: CellCreator;
-  moves: Array<CardinalDirections>;
-  snake: Array<Point>;
+  moves: CardinalDirections[];
+  snake: Point[];
 }

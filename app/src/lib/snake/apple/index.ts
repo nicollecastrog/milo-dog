@@ -1,8 +1,8 @@
-import { State } from "../types";
+import { Point, State } from "../types";
 import withValidState from "../withValidState";
 import { generatePoint, randomPointIsBlocked } from "./helpers";
 
-const apple = ({ columns, rows, snake }: State) => {
+const apple = ({ columns, rows, snake }: State): Point => {
   const blocked = snake;
   // handle if the whole board is blocked
   if (blocked.length === rows * columns) {

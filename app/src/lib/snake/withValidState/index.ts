@@ -14,7 +14,7 @@ const withValidState = <A extends [State, ...any[]], R>(
 ) => (...args: A): R => {
   const state = args[0];
 
-  (Object.keys(defaultState) as Array<StateParams>).map((property) => {
+  (Object.keys(defaultState) as StateParams[]).map((property) => {
     if (state[property] === undefined) {
       throw new Error(`missing state param: ${property}`);
     }

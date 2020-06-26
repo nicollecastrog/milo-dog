@@ -4,8 +4,8 @@ import withValidState from "../withValidState";
 interface State {
   columns: number;
   rows: number;
-  snake: Array<Point>;
-  moves: Array<CardinalDirections>;
+  snake: Point[];
+  moves: CardinalDirections[];
 }
 
 const modulusWithWrapAfterBoundary = (position: number, boundary: number) =>

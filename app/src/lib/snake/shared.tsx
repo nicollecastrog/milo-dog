@@ -10,7 +10,7 @@ export const WEST: West = { x: -1, y: 0 };
 
 // default game elements
 export const defaultApple: Point = { x: 6, y: 2 };
-export const defaultSnake: Array<Point> = [{ x: 2, y: 2 }];
+export const defaultSnake: Point[] = [{ x: 2, y: 2 }];
 
 // testing helpers
 export const dummyCellCreator = () => (

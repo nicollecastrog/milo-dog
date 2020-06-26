@@ -8,5 +8,5 @@ export const generatePoint = (columns: number, rows: number) => ({
   y: random(0, rows)
 });
 
-export const randomPointIsBlocked = (point: Point, blocked: Array<Point>) =>
+export const randomPointIsBlocked = (point: Point, blocked: Point[]) =>
   !!blocked.find((el) => el.x === point.x && el.y === point.y);
