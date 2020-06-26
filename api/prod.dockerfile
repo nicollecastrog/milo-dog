@@ -8,17 +8,21 @@ RUN --mount=type=cache,target=/var/cache/apk apk upgrade --update \
 
 FROM build-env AS dependencies
 WORKDIR /app
-COPY ./ ./
-RUN --mount=type=cache,target=/usr/local/share/.cache/yarn/v1 \
-  yarn install
+COPY package.json yarn.lock ./
+RUN --mount=type=cache,target=/home/ubuntu/.cache/yarn/v6 \
+  yarn
 
-FROM dependencies AS build
+FROM dependencies as production-env
+WORKDIR /app
+COPY ./ ./
+
+FROM production-env AS build
 WORKDIR /app
 RUN yarn build
 
 FROM build-env AS production
 COPY --from=dependencies /app/node_modules ./node_modules
-COPY --from=build /app/package.json ./
+COPY --from=dependencies /app/package.json ./
 COPY --from=build /app/build ./build
 
 EXPOSE 4000
