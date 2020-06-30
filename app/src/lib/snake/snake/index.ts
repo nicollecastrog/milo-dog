@@ -5,13 +5,15 @@ import { samePoint, dropEnd } from "../helpers";
 
 import moveHead from "./head";
 import willEat from "./eat";
+import updateStatus from "../status";
 
 const snake = (state: State): Point[] => {
   const nextHead = moveHead(state);
 
   const willCrash = !!state.snake.find((point) => samePoint(point, nextHead));
   if (willCrash) {
-    return defaultSnake; // TODO: throw error? "freeze" game upon crash?
+    updateStatus(state, "crashed");
+    return defaultSnake;
   }
 
   if (willEat(state)) {

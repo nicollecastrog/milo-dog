@@ -27,6 +27,8 @@ export interface Point {
   y: number;
 }
 
+export type GameStatus = "running" | "won" | "crashed";
+
 export type CellCreator = (point: Point) => any;
 
 export interface State {
@@ -36,4 +38,5 @@ export interface State {
   cellCreator: CellCreator;
   moves: CardinalDirections[];
   snake: Point[];
+  status: GameStatus;
 }

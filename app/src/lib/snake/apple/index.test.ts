@@ -14,16 +14,12 @@ const createLongSnake = (n: number) => {
 };
 
 describe("snake/apple", () => {
-  test("returns an error if the whole board is blocked", () => {
-    // create a snake that occupies the whole 10x10 board:
-    const longSnake = createLongSnake(10);
+  describe("if the whole board is blocked", () => {
+    test("returns the previous apple", () => {
+      const result = apple(dummyState);
 
-    expect(() => {
-      apple({
-        ...dummyState,
-        snake: longSnake
-      });
-    }).toThrow();
+      expect(result).toStrictEqual(dummyState.apple);
+    });
   });
 
   describe("if snake will NOT eat current apple on next move", () => {

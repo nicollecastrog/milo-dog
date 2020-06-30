@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { North, South, East, West, Point } from "./types";
+import { North, South, East, West, Point, GameStatus } from "./types";
 
 // moves
 export const NORTH: North = { x: 0, y: 1 };
@@ -27,7 +27,8 @@ export const dummyState = {
   apple: defaultApple,
   cellCreator: dummyCellCreator,
   moves: [EAST],
-  snake: defaultSnake
+  snake: defaultSnake,
+  status: "running" as GameStatus
 };
 
 // default game state
