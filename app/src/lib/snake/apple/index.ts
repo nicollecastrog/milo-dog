@@ -4,7 +4,6 @@ import { generatePoint, pointIsBlocked } from "../helpers";
 
 import { isBoardBlocked } from "../board";
 import willEat from "../snake/eat";
-import updateStatus from "../status";
 
 const apple = (state: State): Point => {
   const { columns, rows, snake, apple: currentApple } = state;
@@ -12,7 +11,6 @@ const apple = (state: State): Point => {
   const blocked = snake;
   // handle if the whole board is blocked
   if (isBoardBlocked(state)) {
-    updateStatus(state, "won");
     return currentApple;
   }
 

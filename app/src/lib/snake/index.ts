@@ -1,15 +1,19 @@
 import { State } from "./types";
-import updateApple from "./apple";
+import withValidState from "./withValidState";
+
 import { initBoard } from "./board";
 import { addMove, nextMove } from "./moves";
+
+import updateApple from "./apple";
 import updateSnake from "./snake";
-import withValidState from "./withValidState";
+import updateStatus from "./status";
 
 const nextState = (state: State) => ({
   ...state,
   apple: updateApple(state),
   moves: nextMove(state),
-  snake: updateSnake(state)
+  snake: updateSnake(state),
+  status: updateStatus(state)
 });
 
 export { initBoard, addMove };

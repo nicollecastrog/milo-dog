@@ -1,19 +1,16 @@
 import { Point, State } from "../types";
-import { defaultSnake } from "../shared";
 import withValidState from "../withValidState";
 import { dropEnd } from "../helpers";
 
 import moveHead from "./head";
 import willCrash from "./crash";
 import willEat from "./eat";
-import updateStatus from "../status";
 
 const snake = (state: State): Point[] => {
   const nextHead = moveHead(state);
 
   if (willCrash(state)) {
-    updateStatus(state, "crashed");
-    return defaultSnake;
+    return state.snake;
   }
 
   if (willEat(state)) {
