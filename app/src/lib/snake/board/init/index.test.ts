@@ -1,7 +1,7 @@
 import board from "./index";
-import { dummyCellCreator, dummyState } from "../shared";
+import { dummyCellCreator, dummyState } from "../../shared";
 
-describe("snake/board", () => {
+describe("snake/board/init", () => {
   test("returns an array whose length is the number of rows", () => {
     const result = board({
       ...dummyState,

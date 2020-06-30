@@ -1,22 +1,14 @@
 import apple from "./index";
-import { EAST, WEST, dummyState } from "../shared";
-
-const createLongSnake = (n: number) => {
-  let longSnake = [];
-  for (let x = 0; x < n; x++) {
-    // Runs n times, with values of x 0 through n
-    for (let y = 0; y < n; y++) {
-      // Runs n times, with values of y 0 through n
-      longSnake.push({ x: x, y: y });
-    }
-  }
-  return longSnake;
-};
+import { EAST, WEST, dummyState, createLongSnake } from "../shared";
 
 describe("snake/apple", () => {
   describe("if the whole board is blocked", () => {
     test("returns the previous apple", () => {
-      const result = apple(dummyState);
+      const longSnake = createLongSnake(10); // occupies full 10x10 board
+      const result = apple({
+        ...dummyState,
+        snake: longSnake
+      });
 
       expect(result).toStrictEqual(dummyState.apple);
     });

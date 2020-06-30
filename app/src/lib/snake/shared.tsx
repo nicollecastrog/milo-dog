@@ -13,6 +13,18 @@ export const defaultApple: Point = { x: 6, y: 2 };
 export const defaultSnake: Point[] = [{ x: 2, y: 2 }];
 
 // testing helpers
+export const createLongSnake = (n: number) => {
+  let longSnake = [];
+  for (let x = 0; x < n; x++) {
+    // Runs n times, with values of x 0 through n
+    for (let y = 0; y < n; y++) {
+      // Runs n times, with values of y 0 through n
+      longSnake.push({ x: x, y: y });
+    }
+  }
+  return longSnake;
+};
+
 export const dummyCellCreator = () => (
   <View>
     <Text>a dummy cell</Text>

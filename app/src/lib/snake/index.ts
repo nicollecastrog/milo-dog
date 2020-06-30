@@ -1,6 +1,6 @@
 import { State } from "./types";
 import updateApple from "./apple";
-import initBoard from "./board";
+import { initBoard } from "./board";
 import { addMove, nextMove } from "./moves";
 import updateSnake from "./snake";
 import withValidState from "./withValidState";
