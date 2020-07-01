@@ -1,6 +1,7 @@
 import { Dimensions } from "react-native";
+import { Point } from "../lib/snake";
 
-const defaultCellSize = 30;
+export const defaultCellSize = 30;
 const boardPaddingHorizontal = 40; // 20 on either side
 
 const getBoardWidth = () => Dimensions.get("window").width;
@@ -45,5 +46,21 @@ export const getBoardDimensions = () => {
   return {
     width: columns * defaultCellSize,
     height: rows * defaultCellSize
+  };
+};
+
+export const calculateTopAndLeft = ({ x, y }: Point) => {
+  const { height } = getBoardDimensions();
+  return {
+    // as we draw from left -> right, x * defaultCellSize
+    // gives the correct starting point for the cell
+    left: x * defaultCellSize,
+    // as graphs (and our game engine) interpret "y" values increasing going up,
+    // but layout engines interpet "y" values increasing going down,
+    // we need to flip the "y" around, and take into account that
+    // we draw from top -> bottom, so we need to remove an additional cell space
+    // to start the drawing of the cell in the right place,
+    // that way the drawing *ends* at "height - y * defaultCellSize"
+    top: height - y * defaultCellSize - defaultCellSize
   };
 };
