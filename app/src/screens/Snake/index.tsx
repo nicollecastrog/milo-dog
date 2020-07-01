@@ -1,21 +1,47 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 
-const SnakeScreen = () => (
-  <View style={styles.container}>
-    <Text style={styles.title}>Milo Snake Game</Text>
-  </View>
-);
+import ScreenWrapper from "../../components/ScreenWrapper";
+import { initBoard } from "../../lib/snake";
+import { EAST } from "../../lib/snake/shared";
+import { GameStatus } from "../../lib/snake/types";
+
+import Board from "../../components/SnakeBoard";
+import BoardCell from "../../components/SnakeBoard/Cell";
+
+const defaultState = {
+  columns: 10,
+  rows: 10,
+  apple: { x: 6, y: 2 },
+  cellCreator: BoardCell,
+  moves: [EAST],
+  snake: [{ x: 2, y: 2 }],
+  status: "running" as GameStatus
+};
+
+const SnakeScreen = () => {
+  const board = initBoard(defaultState);
+
+  return (
+    <ScreenWrapper scrollable={false}>
+      <View style={styles.fullScreen}>
+        <SafeAreaView style={styles.container}>
+          <Board board={board} />
+        </SafeAreaView>
+      </View>
+    </ScreenWrapper>
+  );
+};
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 32,
-    paddingHorizontal: 20
+  fullScreen: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 100
   },
-  title: {
-    fontSize: 24,
-    fontWeight: "600",
-    color: "black"
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 

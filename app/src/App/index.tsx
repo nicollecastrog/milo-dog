@@ -1,32 +1,8 @@
 import React from "react";
-import { SafeAreaView, ScrollView, StatusBar, StyleSheet } from "react-native";
-
-import Home from "../screens/Home";
+import Snake from "../screens/Snake";
 
 const App = () => {
-  return (
-    <>
-      <StatusBar />
-      <SafeAreaView style={styles.safeAreaView}>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}
-        >
-          <Home />
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
+  return <Snake />;
 };
-
-const styles = StyleSheet.create({
-  safeAreaView: {
-    flex: 1
-  },
-  scrollView: {
-    flex: 1,
-    backgroundColor: "white"
-  }
-});
 
 export default App;
