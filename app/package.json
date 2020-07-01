@@ -20,6 +20,7 @@
     "react": "16.11.0",
     "react-dom": "^16.13.1",
     "react-native": "0.62.2",
+    "react-native-keyevent": "^0.2.8",
     "react-native-web": "^0.12.3"
   },
   "devDependencies": {
@@ -55,7 +56,9 @@
       "json",
       "node"
     ],
-    "setupFilesAfterEnv": ["jest-extended"],
+    "setupFilesAfterEnv": [
+      "jest-extended"
+    ],
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "testPathIgnorePatterns": [
       "\\.snap$",

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
-import KeyEvent from "react-native-keyevent";
+import { StyleSheet, View } from "react-native";
 
 import ScreenWrapper from "../../components/ScreenWrapper";
 import { initBoard, GameStatus, GameState, EAST } from "../../lib/snake";
@@ -36,23 +35,6 @@ const defaultState: GameState = {
 
 const SnakeScreen = () => {
   const [state] = useState(mutableState);
-
-  KeyEvent.onKeyUpListener((keyEvent: any) => {
-    switch (keyEvent.pressedKey) {
-      case "w":
-        Alert.alert("Up");
-        break;
-      case "a":
-        Alert.alert("Left");
-        break;
-      case "s":
-        Alert.alert("Down");
-        break;
-      case "d":
-        Alert.alert("Right");
-        break;
-    }
-  });
 
   const board = initBoard(defaultState);
   const { width, height } = getBoardDimensions();

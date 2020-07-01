@@ -20,5 +20,6 @@ const nextState = (state: State) => ({
 export { initBoard, addMove, NORTH, SOUTH, EAST, WEST };
 export type GameStatus = Status;
 export type Point = GraphPoint;
+export type GameState = State;
 
 export default withValidState(nextState);
