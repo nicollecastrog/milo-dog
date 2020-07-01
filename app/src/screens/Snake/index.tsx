@@ -2,16 +2,17 @@ import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 
 import ScreenWrapper from "../../components/ScreenWrapper";
-import { initBoard } from "../../lib/snake";
-import { EAST } from "../../lib/snake/shared";
-import { GameStatus } from "../../lib/snake/types";
+import { initBoard, GameStatus, EAST } from "../../lib/snake";
+import { getBoardColumnsAndRows } from "../../constants/snake";
 
 import Board from "../../components/SnakeBoard";
 import BoardCell from "../../components/SnakeBoard/Cell";
 
+const { columns, rows } = getBoardColumnsAndRows();
+
 const defaultState = {
-  columns: 10,
-  rows: 10,
+  columns,
+  rows,
   apple: { x: 6, y: 2 },
   cellCreator: BoardCell,
   moves: [EAST],

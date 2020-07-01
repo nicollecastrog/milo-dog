@@ -1,5 +1,6 @@
 import React from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { getBoardDimensions } from "../../constants/snake";
 
 type BoardRow = React.FC[];
 type Board = BoardRow[];
@@ -10,17 +11,15 @@ interface Props {
   board: Board;
 }
 
-const paddingHorizontal = 10;
-
 const Row = ({ row }: RowProps) => (
   <View style={styles.row}>{row.map((cell: React.FC) => cell)}</View>
 );
 
 const SnakeBoard = ({ board }: Props) => {
-  const boardWidth = Dimensions.get("window").width - paddingHorizontal * 2;
+  const { width, height } = getBoardDimensions();
 
   return (
-    <View style={[styles.container, { width: boardWidth, height: boardWidth }]}>
+    <View style={[styles.container, { width: width, height: height }]}>
       <View style={styles.board}>
         {board.map((row, i) => (
           <Row key={`row-${i}`} row={row} />

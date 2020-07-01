@@ -1,8 +1,9 @@
-import { State } from "./types";
+import { GameStatus as Status, State } from "./types";
 import withValidState from "./withValidState";
 
 import { initBoard } from "./board";
 import { addMove, nextMove } from "./moves";
+import { NORTH, SOUTH, EAST, WEST } from "./shared";
 
 import updateApple from "./apple";
 import updateSnake from "./snake";
@@ -16,6 +17,7 @@ const nextState = (state: State) => ({
   status: updateStatus(state)
 });
 
-export { initBoard, addMove };
+export { initBoard, addMove, NORTH, SOUTH, EAST, WEST };
+export type GameStatus = Status;
 
 export default withValidState(nextState);
