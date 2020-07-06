@@ -1,4 +1,9 @@
-import { GameStatus as Status, Point as GraphPoint, State } from "./types";
+import {
+  CardinalDirections as MoveDirections,
+  GameStatus as Status,
+  Point as GraphPoint,
+  State
+} from "./types";
 import withValidState from "./withValidState";
 
 import { initBoard } from "./board";
@@ -17,9 +22,10 @@ const nextState = (state: State) => ({
   status: updateStatus(state)
 });
 
-export { initBoard, addMove, NORTH, SOUTH, EAST, WEST };
+export { addMove, initBoard, NORTH, SOUTH, EAST, WEST };
+export type CardinalDirections = MoveDirections;
 export type GameStatus = Status;
-export type Point = GraphPoint;
 export type GameState = State;
+export type Point = GraphPoint;
 
 export default withValidState(nextState);

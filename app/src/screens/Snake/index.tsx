@@ -1,9 +1,15 @@
-import React, { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
-import KeyEvent from "react-native-keyevent";
+import React, { useEffect, useState, useRef } from "react";
+import { StyleSheet, View } from "react-native";
 
 import ScreenWrapper from "../../components/ScreenWrapper";
-import { initBoard, GameStatus, GameState, EAST } from "../../lib/snake";
+import nextGameState, {
+  addMove,
+  initBoard,
+  CardinalDirections,
+  GameStatus,
+  GameState,
+  EAST
+} from "../../lib/snake";
 import {
   defaultCellSize,
   getBoardColumnsAndRows,
@@ -15,14 +21,18 @@ import BoardCell from "../../components/SnakeBoard/Cell";
 import Snake from "../../components/Snake";
 import SnakeApple from "../../components/SnakeApple";
 
+import { nativeKeyboardListener } from "./listeners";
+
 const { columns, rows } = getBoardColumnsAndRows();
 
-const mutableState = {
+type MutableState = Pick<GameState, "apple" | "moves" | "snake" | "status">;
+
+const mutableState: MutableState = {
   apple: { x: 6, y: 2 },
-  moves: [EAST],
+  moves: [EAST] as CardinalDirections[],
   snake: [
-    { x: 2, y: 2 },
-    { x: 3, y: 2 }
+    { x: 3, y: 2 },
+    { x: 2, y: 2 }
   ],
   status: "running" as GameStatus
 };
@@ -35,24 +45,53 @@ const defaultState: GameState = {
 };
 
 const SnakeScreen = () => {
-  const [state] = useState(mutableState);
+  const [state, setState] = useState(mutableState);
 
-  KeyEvent.onKeyUpListener((keyEvent: any) => {
-    switch (keyEvent.pressedKey) {
-      case "w":
-        Alert.alert("Up");
-        break;
-      case "a":
-        Alert.alert("Left");
-        break;
-      case "s":
-        Alert.alert("Down");
-        break;
-      case "d":
-        Alert.alert("Right");
-        break;
+  // Use useRef for mutable variables that we want to persist
+  // without triggering a re-render on their change
+  const requestRef = useRef<number>(0);
+  const previousTimeRef = useRef<number>(0);
+
+  const gameLoop = (currentTime: number) => {
+    if (currentTime - previousTimeRef.current > 100) {
+      // Pass on a function to the setter of the state
+      // to make sure we always have the latest state
+      setState(
+        (prevState: MutableState): MutableState => {
+          const currentState = { ...defaultState, ...prevState };
+
+          const newState = nextGameState(currentState);
+          const { apple, moves, snake, status } = newState;
+
+          return {
+            ...prevState,
+            ...{ apple, moves, snake, status }
+          };
+        }
+      );
+      previousTimeRef.current = currentTime;
     }
+    requestRef.current = requestAnimationFrame(gameLoop);
+  };
+
+  // From React docs: If you want to run an effect and clean it up only once
+  // (on mount and unmount), you can pass an empty array as a second argument
+  useEffect(() => {
+    requestRef.current = requestAnimationFrame(gameLoop); // initialise gameLoop
+    return () => cancelAnimationFrame(requestRef.current);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // TODO: nativeKeyboardListener is only for ease of dev
+  nativeKeyboardListener((move: CardinalDirections) => {
+    const currentState = { ...defaultState, ...state };
+
+    const newState = addMove(currentState, move);
+    const { apple, moves, snake, status } = newState;
+
+    setState({ apple, moves, snake, status });
   });
+
+  // TODO: native(?)GestureListener
 
   const board = initBoard(defaultState);
   const { width, height } = getBoardDimensions();
