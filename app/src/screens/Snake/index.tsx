@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 
 import ScreenWrapper from "../../components/ScreenWrapper";
@@ -8,10 +8,15 @@ import nextGameState, {
   CardinalDirections,
   GameStatus,
   GameState,
-  EAST
+  Point,
+  NORTH,
+  EAST,
+  SOUTH,
+  WEST
 } from "../../lib/snake";
 import { defaultCellSize } from "../../constants/snake";
 import { getBoardColumnsAndRows, getBoardDimensions } from "../../utils/snake";
+import { getSwipeDirection } from "../../utils/gestures";
 
 import Board from "../../components/SnakeBoard";
 import BoardCell from "../../components/SnakeBoard/Cell";
@@ -43,6 +48,13 @@ const defaultState: GameState = {
   columns,
   rows,
   cellCreator: BoardCell
+};
+
+const cardinalDirectionsDictionary = {
+  up: NORTH,
+  right: EAST,
+  down: SOUTH,
+  left: WEST
 };
 
 const SnakeScreen = () => {
@@ -88,14 +100,35 @@ const SnakeScreen = () => {
   }
   /* eslint-enable react-hooks/rules-of-hooks */
 
-  // TODO: native(?)GestureListener
+  const initialPanPosition = useRef<Point>({ x: 0, y: 0 });
+
+  const onStartShouldSetResponder = ({ nativeEvent }: any) => {
+    initialPanPosition.current = {
+      x: nativeEvent.locationX,
+      y: nativeEvent.locationY
+    };
+    return true;
+  };
+
+  const onResponderRelease = ({ nativeEvent }: any) => {
+    const { x, y } = initialPanPosition.current;
+    const { locationX, locationY } = nativeEvent;
+
+    const swipeDirection = getSwipeDirection(x, y, locationX, locationY);
+    swipeDirection &&
+      onMoveUpdate(cardinalDirectionsDictionary[swipeDirection]);
+  };
 
   const board = initBoard(defaultState);
   const { width, height } = getBoardDimensions();
 
   return (
     <ScreenWrapper scrollable={false}>
-      <View style={styles.fullScreen}>
+      <View
+        style={styles.fullScreen}
+        onStartShouldSetResponder={onStartShouldSetResponder}
+        onResponderRelease={onResponderRelease}
+      >
         <Board board={board} width={width} height={height} />
         <Snake
           snake={state.snake}
