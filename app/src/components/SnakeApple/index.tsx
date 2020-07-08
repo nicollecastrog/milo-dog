@@ -2,7 +2,7 @@ import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { Point } from "../../lib/snake";
 import { appleRed } from "../../constants/colors";
-import { calculateTopAndLeft } from "../../constants/snake";
+import { calculateTopAndLeft } from "../../utils/snake";
 
 interface Props {
   apple: Point;

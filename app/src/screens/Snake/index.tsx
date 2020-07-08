@@ -10,11 +10,8 @@ import nextGameState, {
   GameState,
   EAST
 } from "../../lib/snake";
-import {
-  defaultCellSize,
-  getBoardColumnsAndRows,
-  getBoardDimensions
-} from "../../constants/snake";
+import { defaultCellSize } from "../../constants/snake";
+import { getBoardColumnsAndRows, getBoardDimensions } from "../../utils/snake";
 
 import Board from "../../components/SnakeBoard";
 import BoardCell from "../../components/SnakeBoard/Cell";
