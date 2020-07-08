@@ -13,7 +13,7 @@ interface Props {
 
 const SnakeApple = ({ apple, cellSize, width, height }: Props) => {
   const { x, y } = apple;
-  const { top, left } = calculateTopAndLeft(apple);
+  const { top, left } = calculateTopAndLeft(apple, height);
 
   return (
     <SafeAreaView style={styles.container}>

@@ -18,7 +18,7 @@ const Snake = ({ snake, cellSize, width, height }: Props) => {
         <View style={{ width: width, height: height }}>
           {snake.map((cell) => {
             const { x, y } = cell;
-            const { top, left } = calculateTopAndLeft(cell);
+            const { top, left } = calculateTopAndLeft(cell, height);
             return (
               <View
                 key={`x-${x}-y${y}`}

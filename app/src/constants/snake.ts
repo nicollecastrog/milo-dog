@@ -49,8 +49,7 @@ export const getBoardDimensions = () => {
   };
 };
 
-export const calculateTopAndLeft = ({ x, y }: Point) => {
-  const { height } = getBoardDimensions();
+export const calculateTopAndLeft = ({ x, y }: Point, height: number) => {
   return {
     // as we draw from left -> right, x * defaultCellSize
     // gives the correct starting point for the cell
