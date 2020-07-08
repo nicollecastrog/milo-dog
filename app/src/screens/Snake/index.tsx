@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { Platform, StyleSheet, View } from "react-native";
 
 import ScreenWrapper from "../../components/ScreenWrapper";
 import nextGameState, {
@@ -19,9 +19,13 @@ import {
 import Board from "../../components/SnakeBoard";
 import BoardCell from "../../components/SnakeBoard/Cell";
 import Snake from "../../components/Snake";
-import SnakeApple from "../../components/SnakeApple";
+import Apple from "../../components/SnakeApple";
 
-import { nativeKeyboardListener } from "./listeners";
+import {
+  useAnimationFrame,
+  useNativeKeyboardListener,
+  useWebKeyboardListener
+} from "./hooks";
 
 const { columns, rows } = getBoardColumnsAndRows();
 
@@ -47,49 +51,45 @@ const defaultState: GameState = {
 const SnakeScreen = () => {
   const [state, setState] = useState(mutableState);
 
-  // Use useRef for mutable variables that we want to persist
-  // without triggering a re-render on their change
-  const requestRef = useRef<number>(0);
-  const previousTimeRef = useRef<number>(0);
+  useAnimationFrame(() => {
+    setState(
+      (prevState: MutableState): MutableState => {
+        const currentState = { ...defaultState, ...prevState };
 
-  const gameLoop = (currentTime: number) => {
-    if (currentTime - previousTimeRef.current > 100) {
-      // Pass on a function to the setter of the state
-      // to make sure we always have the latest state
-      setState(
-        (prevState: MutableState): MutableState => {
-          const currentState = { ...defaultState, ...prevState };
+        const newState = nextGameState(currentState);
+        const { apple, moves, snake, status } = newState;
 
-          const newState = nextGameState(currentState);
-          const { apple, moves, snake, status } = newState;
+        return {
+          ...prevState,
+          ...{ apple, moves, snake, status }
+        };
+      }
+    );
+  });
 
-          return {
-            ...prevState,
-            ...{ apple, moves, snake, status }
-          };
-        }
-      );
-      previousTimeRef.current = currentTime;
-    }
-    requestRef.current = requestAnimationFrame(gameLoop);
-  };
-
-  // From React docs: If you want to run an effect and clean it up only once
-  // (on mount and unmount), you can pass an empty array as a second argument
-  useEffect(() => {
-    requestRef.current = requestAnimationFrame(gameLoop); // initialise gameLoop
-    return () => cancelAnimationFrame(requestRef.current);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // TODO: nativeKeyboardListener is only for ease of dev
-  nativeKeyboardListener((move: CardinalDirections) => {
+  const onMoveUpdate = (move: CardinalDirections) => {
     const currentState = { ...defaultState, ...state };
 
     const newState = addMove(currentState, move);
     const { apple, moves, snake, status } = newState;
 
     setState({ apple, moves, snake, status });
-  });
+  };
+
+  /* eslint-disable react-hooks/rules-of-hooks */
+
+  // React Hooks are not meant to be called conditionally, to ensure that
+  // Hooks are called in the same order each time a component renders.
+
+  // However here we know this condition will not change between renders
+  // on a given device, so we disable the eslint rule instead.
+  if (Platform.OS === "web") {
+    useWebKeyboardListener(onMoveUpdate);
+  } else {
+    // TODO: useNativeKeyboardListener is only for ease of dev
+    useNativeKeyboardListener(onMoveUpdate);
+  }
+  /* eslint-enable react-hooks/rules-of-hooks */
 
   // TODO: native(?)GestureListener
 
@@ -106,7 +106,7 @@ const SnakeScreen = () => {
           width={width}
           height={height}
         />
-        <SnakeApple
+        <Apple
           apple={state.apple}
           cellSize={defaultCellSize}
           width={width}
