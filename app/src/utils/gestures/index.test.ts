@@ -2,6 +2,12 @@ import { getSwipeDirection } from "./index";
 
 describe("utils/gestures", () => {
   describe("getSwipeDirection", () => {
+    it(`should return null for taps
+        (no swiping / distance travelled in any direction)`, () => {
+      const direction = getSwipeDirection(50, 100, 50, 100);
+      expect(direction).toBeNull();
+    });
+
     it("should return right for left-to-right swipe", () => {
       const direction = getSwipeDirection(0, 0, 500, 0);
       expect(direction).toBe("right");

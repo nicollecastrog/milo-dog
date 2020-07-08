@@ -20,5 +20,9 @@ export const getSwipeDirection = (
     return "up";
   }
 
-  return "down";
+  if (absoluteY > absoluteX && deltaY > 0) {
+    return "down";
+  }
+
+  return null;
 };
