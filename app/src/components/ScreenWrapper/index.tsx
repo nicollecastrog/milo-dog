@@ -11,11 +11,7 @@ const ScreenWrapper = ({ children, scrollable = true }: Props) => (
     {Platform.OS === "web" || !scrollable ? (
       children
     ) : (
-      <ScrollView
-        style={styles.scrollView}
-        alwaysBounceVertical={false}
-        testID="ScreenWrapper:ScrollView"
-      >
+      <ScrollView style={styles.scrollView} alwaysBounceVertical={false}>
         {children}
       </ScrollView>
     )}
@@ -24,8 +20,7 @@ const ScreenWrapper = ({ children, scrollable = true }: Props) => (
 
 const styles = StyleSheet.create({
   container: {
-    ...(Platform.OS === "web" ? { flexGrow: 1 } : { flex: 1 }),
-    backgroundColor: "white"
+    ...(Platform.OS === "web" ? { flexGrow: 1 } : { flex: 1 })
   },
   scrollView: {
     flex: 1

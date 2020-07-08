@@ -99,7 +99,7 @@ const SnakeScreen = () => {
   return (
     <ScreenWrapper scrollable={false}>
       <View
-        style={styles.fullScreen}
+        style={styles.container}
         onStartShouldSetResponder={onStartShouldSetResponder}
         onResponderRelease={onResponderRelease}
       >
@@ -122,9 +122,8 @@ const SnakeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  fullScreen: {
-    ...StyleSheet.absoluteFillObject,
-    zIndex: 100
+  container: {
+    flex: 1
   }
 });
 
