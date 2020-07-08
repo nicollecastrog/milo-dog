@@ -1,7 +1,39 @@
 import { useEffect, useRef } from "react";
 import { Platform } from "react-native";
 import KeyEvent from "react-native-keyevent";
-import { CardinalDirections, NORTH, SOUTH, EAST, WEST } from "../../lib/snake";
+
+import {
+  CardinalDirections,
+  Point,
+  NORTH,
+  SOUTH,
+  EAST,
+  WEST
+} from "../../lib/snake";
+import { getSwipeDirection } from "../../utils/gestures";
+
+export const useAnimationFrame = (callback: Function) => {
+  // Use `useRef` for mutable variables that we want to persist
+  // without triggering a re-render on their change
+  const requestRef = useRef<number>(0);
+  const previousTimeRef = useRef<number>(0);
+
+  const animationLoop = (currentTime: number) => {
+    if (currentTime - previousTimeRef.current > 100) {
+      callback();
+      previousTimeRef.current = currentTime;
+    }
+    // continuosly re-trigger animationLoop & update reference to it
+    requestRef.current = requestAnimationFrame(animationLoop);
+  };
+
+  // From React docs: If you want to run an effect and clean it up only once
+  // (on mount and unmount), you can pass an empty array as a second argument
+  useEffect(() => {
+    requestRef.current = requestAnimationFrame(animationLoop); // initialise animationLoop
+    return () => cancelAnimationFrame(requestRef.current);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+};
 
 const useNativeKeyUp = (callback: (event: KeyboardEvent) => void) => {
   useEffect(() => {
@@ -57,29 +89,6 @@ export const useNativeKeyboardListener = (
   });
 };
 
-export const useAnimationFrame = (callback: Function) => {
-  // Use `useRef` for mutable variables that we want to persist
-  // without triggering a re-render on their change
-  const requestRef = useRef<number>(0);
-  const previousTimeRef = useRef<number>(0);
-
-  const animationLoop = (currentTime: number) => {
-    if (currentTime - previousTimeRef.current > 100) {
-      callback();
-      previousTimeRef.current = currentTime;
-    }
-    // continuosly re-trigger animationLoop & update reference to it
-    requestRef.current = requestAnimationFrame(animationLoop);
-  };
-
-  // From React docs: If you want to run an effect and clean it up only once
-  // (on mount and unmount), you can pass an empty array as a second argument
-  useEffect(() => {
-    requestRef.current = requestAnimationFrame(animationLoop); // initialise animationLoop
-    return () => cancelAnimationFrame(requestRef.current);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-};
-
 const useKeyDown = (callback: (event: KeyboardEvent) => void) => {
   useEffect(() => {
     document.addEventListener("keydown", callback);
@@ -110,4 +119,38 @@ export const useWebKeyboardListener = (
         break;
     }
   });
+};
+
+const cardinalDirectionsDictionary = {
+  up: NORTH,
+  right: EAST,
+  down: SOUTH,
+  left: WEST
+};
+
+export const useGestureResponder = (
+  callback: (move: CardinalDirections) => void
+) => {
+  const initialPanPosition = useRef<Point>({ x: 0, y: 0 });
+
+  const onStartShouldSetResponder = ({ nativeEvent }: any) => {
+    initialPanPosition.current = {
+      x: nativeEvent.locationX,
+      y: nativeEvent.locationY
+    };
+    return true;
+  };
+
+  const onResponderRelease = ({ nativeEvent }: any) => {
+    const { x, y } = initialPanPosition.current;
+    const { locationX, locationY } = nativeEvent;
+
+    const swipeDirection = getSwipeDirection(x, y, locationX, locationY);
+    swipeDirection && callback(cardinalDirectionsDictionary[swipeDirection]);
+  };
+
+  return {
+    onStartShouldSetResponder,
+    onResponderRelease
+  };
 };
