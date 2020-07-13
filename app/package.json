@@ -20,6 +20,7 @@
     "react": "16.11.0",
     "react-dom": "^16.13.1",
     "react-native": "0.62.2",
+    "react-native-keyevent": "^0.2.8",
     "react-native-web": "^0.12.3"
   },
   "devDependencies": {
@@ -35,6 +36,7 @@
     "eslint": "^6.5.1",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^24.9.0",
+    "jest-extended": "^0.11.5",
     "metro-react-native-babel-preset": "^0.58.0",
     "prettier": "^2.0.4",
     "react-native-web-image-loader": "^0.1.1",
@@ -54,10 +56,14 @@
       "json",
       "node"
     ],
+    "setupFilesAfterEnv": [
+      "jest-extended"
+    ],
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "testPathIgnorePatterns": [
       "\\.snap$",
-      "<rootDir>/node_modules/"
+      "<rootDir>/node_modules/",
+      "common.test.ts$"
     ],
     "cacheDirectory": ".jest/cache",
     "collectCoverage": true,

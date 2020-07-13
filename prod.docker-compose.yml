@@ -1,7 +1,7 @@
 version: "3.4"
 x-production:
   &production-defaults
-  image: milo-prod
+  image: milo-api-prod
   ports:
     - "4000:4000"
   environment:
@@ -16,5 +16,5 @@ services:
     build:
       context: ./api
       dockerfile: prod.dockerfile
-      target: dependencies
+      target: production-env
     <<: *production-defaults

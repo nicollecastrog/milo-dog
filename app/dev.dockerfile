@@ -6,11 +6,15 @@ FROM base as test-build-env
 RUN --mount=type=cache,target=/var/cache/apk apk add --no-cache \
   yarn
 
-FROM test-build-env AS test-dependencies
+FROM test-build-env as test-dependencies
+WORKDIR /app
+COPY package.json yarn.lock ./
+RUN --mount=type=cache,target=/home/ubuntu/.cache/yarn/v6 \
+  yarn
+
+FROM test-dependencies AS test-env
 WORKDIR /app
 COPY ./ ./
-RUN --mount=type=cache,target=/usr/local/share/.cache/yarn/v1 \
-  yarn
 
 FROM base as watchman-runtime-dependencies
 RUN --mount=type=cache,target=/var/cache/apk apk add --no-cache \
@@ -44,9 +48,14 @@ RUN rm -rf watchman
 
 FROM build-env AS dependencies
 WORKDIR /app
-COPY ./ ./
-RUN --mount=type=cache,target=/usr/local/share/.cache/yarn/v1 \
+COPY package.json yarn.lock ./
+RUN --mount=type=cache,target=/home/ubuntu/.cache/yarn/v6 \
   yarn
+
+FROM dependencies AS dev-env
+WORKDIR /app
+COPY ./ ./
+
 
 EXPOSE 8081
 CMD yarn start

@@ -20,13 +20,13 @@ services:
     # volume allows us to mount in app code directly into a running container
     # if we update source code, then the changes will take effect immediately
     volumes:
-      - "./api:/app"
+      - "./api/src:/app/src"
     <<: *api-defaults
   apiTest:
     build:
       context: ./api
       dockerfile: dev.dockerfile
-      target: dependencies
+      target: dev-env
     <<: *api-defaults
     # note no volume is used for apiTest service, as this is the docker image
     # used in CI, so the full source code must be COPY'd into the image
@@ -34,7 +34,7 @@ services:
     build:
       context: ./app
       dockerfile: dev.dockerfile
-      target: dependencies
+      target: dev-env
     image: milo-app-dev
     volumes:
       - "./app:/app"
@@ -43,6 +43,6 @@ services:
     build:
       context: ./app
       dockerfile: dev.dockerfile
-      target: test-dependencies
+      target: test-env
     image: milo-app-test-dev
     <<: *app-defaults
