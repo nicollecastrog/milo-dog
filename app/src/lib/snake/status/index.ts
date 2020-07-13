@@ -1,5 +1,6 @@
 import { GameStatus, State } from "../types";
 import { isBoardBlocked } from "../board";
+import withValidState from "../withValidState";
 import willCrash from "../snake/crash";
 
 const updateStatus = (state: State): GameStatus => {
@@ -14,4 +15,4 @@ const updateStatus = (state: State): GameStatus => {
   return "running";
 };
 
-export default updateStatus;
+export default withValidState(updateStatus);

@@ -19,13 +19,11 @@ const webStyles: any = {
     resizeMode: "contain"
   },
   dog: {
-    // aspectRatio: 1.82
     // screen's paddingHorizontal is 20 => TODO: component shouldn't need to know this
-    height: (width - 40) / 1.82
+    height: (width - 40) / 1.82 // aspectRatio: 1.82
   },
   home: {
-    // aspectRatio: 1
-    height: width
+    height: width // aspectRatio: 1
   }
 };
 

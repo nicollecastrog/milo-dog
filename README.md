@@ -1,5 +1,5 @@
 # milo.dog
-A massively over-engineered webapp about a small sausage dog, Milo :dog:
+A massively over-engineered web/iOS/Android app about a small sausage dog, Milo :dog:
 
 [![Build status](https://badge.buildkite.com/9bd2a6e64f072b66cd0f0997fb75af8033fb781df412812800.svg?branch=master)](https://buildkite.com/milo-dot-dog/milo-dot-dog)
 
@@ -23,7 +23,7 @@ __Milo.dog__ is a monorepo containing several containerised applications. It is 
 #### Prerequisites:
 
   1. You must have [Docker](https://docs.docker.com/get-docker/) installed (minimum version: 18.06). You must also set `{ "experimental": true }` in the [Docker Daemon configuration file](https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-configuration-file).
-  
+
      Both the minimum version and the `experimental` config mentioned above are needed because this project uses the [Buildkit](https://docs.docker.com/engine/reference/builder/#buildkit) engine to do Docker builds. Buildkit provides lots of benefits such as skipping unused build stages and parallelising independent build stages. Additionally, it allows for use of [experimental Dockerfile syntaxes](https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/experimental.md), which in turn allows us to use cache mounts to further optimise builds. For example, whereas adding a new package will invalidate the Docker layer cache upon `yarn install`, using a cache mount will ensure that all the previously-downloaded packages are reused and only the new package is installed.
 
 1. If your chosen method of installation of Docker doesn't already include Docker Compose, please [make sure you install that too](https://docs.docker.com/compose/install/).
